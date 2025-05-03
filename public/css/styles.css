@@ -319,12 +319,37 @@ nav a {
   text-decoration: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: background-color 0.3s ease;
+  text-align: center;
 }
 
 nav a:hover {
   background-color: var(--nav-hover-bg);
   color: var(--nav-text);
   text-decoration: none;
+}
+
+@media screen and (min-width: 768px) {
+  /* Navigation - Desktop Layout */
+  .hamburger-menu {
+    display: none;
+  }
+  
+  nav ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  
+  nav li {
+    width: auto;
+    flex: 1;
+  }
+  
+  nav a {
+    padding: 1rem;
+    border-bottom: none;
+    white-space: nowrap;
+  }
 }
 
 /******* Main Content Styles ***************/
@@ -609,26 +634,6 @@ footer {
 
   h2 {
     font-size: 1.5rem;
-  }
-  
-  /* Navigation - Desktop Layout */
-  .hamburger-menu {
-    display: none;
-  }
-  
-  nav ul {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-  }
-  
-  nav li {
-    width: auto;
-  }
-  
-  nav a {
-    padding: 1rem;
-    border-bottom: none;
   }
   
   /* Hero section - desktop layout */
