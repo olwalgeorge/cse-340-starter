@@ -1,1 +1,104 @@
-<h1>George Olwal</h1>
+<h1>Welcome to CSE Motors - Kisumu's Premier Vehicle Dealership</h1>
+
+<section class="hero" aria-labelledby="featured-vehicle">
+  <div class="hero-content">
+    <h2 id="featured-vehicle">Jeep Wrangler</h2>
+    <ul class="feature-list">
+      <li>4x4 Off-road capability</li>
+      <li>Removable doors & roof</li>
+      <li>Adventure ready for Kenyan terrain!</li>
+    </ul>
+    <div class="cta-container">
+      <a href="#" class="cta-button">Own Today</a>
+    </div>
+  </div>
+  <div class="hero-image">
+    <img src="/images/vehicles/wrangler.jpg" alt="Jeep Wrangler - Perfect for Kisumu's terrain" width="500" height="300">
+  </div>
+</section>
+
+<div class="main-content">
+  <section class="upgrade-container" aria-labelledby="upgrades-heading">
+    <h2 id="upgrades-heading">Wrangler Upgrades</h2>
+    <div class="upgrades">
+      <article class="upgrade-item">
+        <div class="upgrade-image">
+          <img src="/images/upgrades/bumper_sticker.jpg" alt="Bumper Stickers for your off-road adventures" width="100" height="100">
+        </div>
+        <a href="#" aria-label="Learn more about Bumper Stickers">Bumper Stickers</a>
+      </article>
+      <article class="upgrade-item">
+        <div class="upgrade-image">
+          <img src="/images/upgrades/flame.jpg" alt="Flame Decals to customize your Wrangler" width="100" height="100">
+        </div>
+        <a href="#" aria-label="Learn more about Flame Decals">Flame Decals</a>
+      </article>
+      <article class="upgrade-item">
+        <div class="upgrade-image">
+          <img src="/images/upgrades/hub-cap.jpg" alt="Premium Hub Caps for off-road driving" width="100" height="100">
+        </div>
+        <a href="#" aria-label="Learn more about Hub Caps">Hub Caps</a>
+      </article>
+      <article class="upgrade-item">
+        <div class="upgrade-image">
+          <img src="/images/upgrades/flux-cap.png" alt="LED Light Bar for night adventures in Kisumu" width="100" height="100">
+        </div>
+        <a href="#" aria-label="Learn more about LED Light Bars">LED Light Bar</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="reviews-container" aria-labelledby="reviews-heading">
+    <h2 id="reviews-heading">Jeep Wrangler Reviews</h2>
+    <ul class="review-list">
+      <li>"Perfect for my off-road adventures in Kisumu!" <span class="rating">(5/5)</span></li>
+      <li>"The ultimate freedom machine for exploring Kenya." <span class="rating">(5/5)</span></li>
+      <li>"Great for Kenyan safaris and rough terrain!" <span class="rating">(5/5)</span></li>
+      <li>"Handles the rugged terrain of Kisumu perfectly." <span class="rating">(4.5/5)</span></li>
+      <li>"Built for adventure and delivers on African roads!" <span class="rating">(4/5)</span></li>
+    </ul>
+  </section>
+</div>
+
+<!-- Structured Data for the featured vehicle -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Vehicle",
+  "name": "Jeep Wrangler",
+  "manufacturer": {
+    "@type": "Organization",
+    "name": "Jeep"
+  },
+  "vehicleConfiguration": "4x4 Off-road",
+  "vehicleInteriorType": "Removable doors & roof",
+  "description": "Adventure ready Jeep Wrangler perfect for Kenyan terrain with 4x4 off-road capability.",
+  "offers": {
+    "@type": "Offer",
+    "availability": "https://schema.org/InStock",
+    "price": "42000",
+    "priceCurrency": "USD",
+    "seller": {
+      "@type": "AutoDealer",
+      "name": "CSE Motors",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Kisumu",
+        "addressCountry": "Kenya"
+      }
+    }
+  },
+  "review": {
+    "@type": "Review",
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "4.9",
+      "bestRating": "5"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Safari Enthusiast"
+    }
+  }
+}
+</script>

@@ -1,0 +1,27 @@
+<%
+  // Determine breadcrumbs based on current page
+  let breadcrumbs = [];
+  
+  // Always include home
+  breadcrumbs.push({ label: 'Home', url: '/', active: title === 'Home' });
+  
+  // Add current page if not home
+  if (title !== 'Home') {
+    // This handles basic pages - for more complex structures, this would need to be enhanced
+    breadcrumbs.push({ label: title, url: '#', active: true });
+  }
+%>
+
+<nav class="breadcrumb-nav" aria-label="Breadcrumb">
+  <ol class="breadcrumb-list">
+    <% breadcrumbs.forEach((crumb, index) => { %>
+      <li class="breadcrumb-item <%= crumb.active ? 'active' : '' %>">
+        <% if (crumb.active) { %>
+          <%= crumb.label %>
+        <% } else { %>
+          <a href="<%= crumb.url %>"><%= crumb.label %></a>
+        <% } %>
+      </li>
+    <% }) %>
+  </ol>
+</nav>

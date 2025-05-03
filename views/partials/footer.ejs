@@ -1,5 +1,32 @@
 <% const d = new Date()
 let year = d.getFullYear() %>
 <footer>
-  <p class="copyright">& copy ; <%= year %>, CSE 340 App</p>
+  <div class="footer-section">
+    <p class="copyright">&copy; <%= year %>, CSE Motors</p>
+    <p class="attribution">Created by George Olwal | CSE340 | <%= year %></p>
+    <p class="location">Kisumu, Kenya</p>
+  </div>
+  
+  <div class="footer-section company-details">
+    <address itemscope itemtype="https://schema.org/LocalBusiness">
+      <span itemprop="name">CSE Motors Kisumu</span><br>
+      <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+        <span itemprop="streetAddress">123 CSE Street</span><br>
+        <span itemprop="addressLocality">Kisumu</span>,
+        <span itemprop="addressRegion">Kisumu County</span><br>
+        <span itemprop="postalCode">40100</span>,
+        <span itemprop="addressCountry">Kenya</span>
+      </div>
+      <span itemprop="telephone">+254-700-000000</span><br>
+      <a href="mailto:info@csemotors.co.ke" itemprop="email">info@csemotors.co.ke</a>
+    </address>
+  </div>
+  
+  <div class="footer-section">
+    <div class="social-links">
+      <a href="https://facebook.com/csemotors" aria-label="Follow us on Facebook" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/csemotors" aria-label="Follow us on Twitter" rel="noopener">Twitter</a>
+      <a href="https://instagram.com/csemotors" aria-label="Follow us on Instagram" rel="noopener">Instagram</a>
+    </div>
+  </div>
 </footer>

@@ -1,9 +1,16 @@
-<nav>
-  <ul>
-    <li>Home</li>
-    <li>Custom</li>
-    <li>Sedan</li>
-    <li>SUV</li>
-    <li>Truck</li>
+<nav aria-label="Main Navigation">
+  <div class="hamburger-menu">
+    <button id="hamburgerBtn" class="hamburger-btn" aria-label="Menu" aria-controls="navList" aria-haspopup="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+  <ul id="navList" role="menu" itemscope itemtype="https://schema.org/SiteNavigationElement">
+    <li role="none"><a href="/" title="Home page" role="menuitem" itemprop="url"><span itemprop="name">Home</span></a></li>
+    <li role="none"><a href="/custom" title="Custom vehicles" role="menuitem" itemprop="url"><span itemprop="name">Custom</span></a></li>
+    <li role="none"><a href="/sedan" title="Sedan vehicles" role="menuitem" itemprop="url"><span itemprop="name">Sedan</span></a></li>
+    <li role="none"><a href="/suv" title="SUV vehicles" role="menuitem" itemprop="url"><span itemprop="name">SUV</span></a></li>
+    <li role="none"><a href="/truck" title="Truck vehicles" role="menuitem" itemprop="url"><span itemprop="name">Truck</span></a></li>
   </ul>
 </nav>
