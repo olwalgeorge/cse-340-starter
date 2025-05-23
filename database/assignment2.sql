@@ -22,3 +22,7 @@ SET
 WHERE
     account_email = 'tony@starkent.com';
 
+-- Task 3: Delete Tony Stark record from the database
+DELETE FROM public.account
+WHERE
+    account_email = 'tony@starkent.com';
