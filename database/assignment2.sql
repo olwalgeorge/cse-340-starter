@@ -26,3 +26,16 @@ WHERE
 DELETE FROM public.account
 WHERE
     account_email = 'tony@starkent.com';
+
+-- Task 4: Update GM Hummer record to change "small interiors" to "a huge interior" used replace to target needed update without repeating the entire description
+UPDATE public.inventory
+SET
+    inv_description =
+REPLACE (
+        inv_description,
+        'small interiors',
+        'a huge interior'
+    )
+WHERE
+    inv_make = 'GM'
+    AND inv_model = 'Hummer';
