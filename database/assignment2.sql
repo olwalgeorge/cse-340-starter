@@ -46,3 +46,19 @@ FROM public.inventory i
     INNER JOIN public.classification c ON i.classification_id = c.classification_id
 WHERE
     c.classification_name = 'Sport';
+
+-- Task 6: Update all inventory records to add "/vehicles" to the middle of file paths
+UPDATE public.inventory
+SET
+    inv_image =
+REPLACE (
+        inv_image,
+        '/images/',
+        '/images/vehicles/'
+    ),
+    inv_thumbnail =
+REPLACE (
+        inv_thumbnail,
+        '/images/',
+        '/images/vehicles/'
+    );
