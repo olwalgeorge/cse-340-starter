@@ -65,4 +65,18 @@ invCont.buildVehicleDetail = async function (req, res, next) {
   }
 }
 
+/* ***************************
+ *  Intentional Error Route (Task 3)
+ *  This route is designed to trigger a 500 error for testing
+ * ************************** */
+invCont.triggerError = async function (req, res, next) {
+  try {
+    // Intentionally throw an error to test error handling middleware
+    throw new Error('This is an intentional 500 type error for testing the error handling middleware.')
+  } catch (error) {
+    console.error("Intentional error triggered:", error)
+    next(error)
+  }
+}
+
 module.exports = invCont

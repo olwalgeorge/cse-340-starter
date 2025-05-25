@@ -107,4 +107,51 @@ function handleErrors(fn) {
   return (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 }
 
-module.exports = { getNav, buildClassificationGrid, buildVehicleDetailView, handleErrors }
+/* ****************************************
+ * Express Error Handler
+ * Must be placed after all other middleware
+ **************************************** */
+function errorHandler(err, req, res, next) {
+  let nav = `<ul id="navList">
+    <li><a href="/" title="Home page">Home</a></li>
+    <li><a href="/inv/type/1" title="Custom vehicles">Custom</a></li>
+    <li><a href="/inv/type/2" title="Sport vehicles">Sport</a></li>
+    <li><a href="/inv/type/3" title="SUV vehicles">SUV</a></li>
+    <li><a href="/inv/type/4" title="Truck vehicles">Truck</a></li>
+    <li><a href="/inv/type/5" title="Sedan vehicles">Sedan</a></li>
+  </ul>`
+  
+  let message = err.message || 'Oh no! There was a crash. Maybe try a different route?'
+  let status = err.status || 500
+  
+  console.error(`Error at: "${req.originalUrl}": ${err.message}`)
+  
+  if (process.env.NODE_ENV === 'development') {
+    console.error(err.stack)
+  }
+  
+  res.status(status).render("errors/error", {
+    title: status == 404 ? 'Sorry, page not found' : 'Server Error',
+    message,
+    nav,
+    status
+  })
+}
+
+/* ****************************************
+ * 404 Handler (File Not Found)
+ **************************************** */
+function handle404(req, res, next) {
+  const err = new Error(`Sorry, we appear to have lost that page.`)
+  err.status = 404
+  next(err)
+}
+
+module.exports = { 
+  getNav, 
+  buildClassificationGrid, 
+  buildVehicleDetailView, 
+  handleErrors,
+  errorHandler,
+  handle404
+}
