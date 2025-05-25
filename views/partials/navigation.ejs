@@ -6,11 +6,16 @@
       <span></span>
     </button>
   </div>
+  <% if (typeof nav !== 'undefined') { %>
+    <%- nav %>
+  <% } else { %>
   <ul id="navList" role="menu" itemscope itemtype="https://schema.org/SiteNavigationElement">
     <li role="none"><a href="/" title="Home page" role="menuitem" itemprop="url"><span itemprop="name">Home</span></a></li>
-    <li role="none"><a href="/custom" title="Custom vehicles" role="menuitem" itemprop="url"><span itemprop="name">Custom</span></a></li>
-    <li role="none"><a href="/sedan" title="Sedan vehicles" role="menuitem" itemprop="url"><span itemprop="name">Sedan</span></a></li>
-    <li role="none"><a href="/suv" title="SUV vehicles" role="menuitem" itemprop="url"><span itemprop="name">SUV</span></a></li>
-    <li role="none"><a href="/truck" title="Truck vehicles" role="menuitem" itemprop="url"><span itemprop="name">Truck</span></a></li>
+    <li role="none"><a href="/inv/type/1" title="Custom vehicles" role="menuitem" itemprop="url"><span itemprop="name">Custom</span></a></li>
+    <li role="none"><a href="/inv/type/2" title="Sport vehicles" role="menuitem" itemprop="url"><span itemprop="name">Sport</span></a></li>
+    <li role="none"><a href="/inv/type/3" title="SUV vehicles" role="menuitem" itemprop="url"><span itemprop="name">SUV</span></a></li>
+    <li role="none"><a href="/inv/type/4" title="Truck vehicles" role="menuitem" itemprop="url"><span itemprop="name">Truck</span></a></li>
+    <li role="none"><a href="/inv/type/5" title="Sedan vehicles" role="menuitem" itemprop="url"><span itemprop="name">Sedan</span></a></li>
   </ul>
+  <% } %>
 </nav>

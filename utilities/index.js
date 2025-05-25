@@ -8,18 +8,18 @@ const invModel = require("../models/inventory-model")
  ************************** */
 async function getNav(){
   let data = await invModel.getClassifications()
-  let list = "<ul>"
-  list += '<li><a href="/" title="Home page">Home</a></li>'
+  let list = '<ul id="navList" role="menu" itemscope itemtype="https://schema.org/SiteNavigationElement">'
+  list += '<li role="none"><a href="/" title="Home page" role="menuitem" itemprop="url"><span itemprop="name">Home</span></a></li>'
   data.rows.forEach((row) => {
-    list += "<li>"
+    list += '<li role="none">'
     list +=
       '<a href="/inv/type/' +
       row.classification_id +
       '" title="See our inventory of ' +
       row.classification_name +
-      ' vehicles">' +
+      ' vehicles" role="menuitem" itemprop="url"><span itemprop="name">' +
       row.classification_name +
-      "</a>"
+      "</span></a>"
     list += "</li>"
   })
   list += "</ul>"

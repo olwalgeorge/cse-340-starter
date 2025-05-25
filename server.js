@@ -28,8 +28,10 @@ app.use(static)
 app.use("/inv", require("./routes/inventoryRoute"))
 
 // Index route
-app.get("/", function(req, res){
-  res.render("index", {title: "Home"})
+app.get("/", async function(req, res){
+  const utilities = require("./utilities/")
+  let nav = await utilities.getNav()
+  res.render("index", {title: "Home", nav})
 })
 
 /* ***********************

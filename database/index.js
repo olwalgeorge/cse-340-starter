@@ -9,7 +9,9 @@ let pool
 if (process.env.NODE_ENV == "development") {
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: false,
+    ssl: {
+      rejectUnauthorized: false
+    },
   })
 
 // Added for troubleshooting queries
@@ -29,6 +31,9 @@ if (process.env.NODE_ENV == "development") {
 } else {
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false
+    },
   })
   module.exports = pool
 }
