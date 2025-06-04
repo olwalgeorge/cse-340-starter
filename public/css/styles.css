@@ -1262,6 +1262,58 @@ a:focus, button:focus {
   transform: translateY(-1px);
 }
 
+/* Form Input Class - for consistency */
+.form-input {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--text-color);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  position: relative;
+  font-family: inherit;
+  resize: vertical;
+}
+
+@media (prefers-color-scheme: dark) {
+  .form-input {
+    background: rgba(50, 50, 50, 0.8);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.form-input:focus {
+  border-color: #667eea;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 
+    0 0 0 4px rgba(102, 126, 234, 0.1),
+    0 4px 20px rgba(102, 126, 234, 0.15);
+  transform: translateY(-2px);
+}
+
+@media (prefers-color-scheme: dark) {
+  .form-input:focus {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 
+      0 0 0 4px rgba(102, 126, 234, 0.2),
+      0 4px 20px rgba(102, 126, 234, 0.25);
+  }
+}
+
+.form-input:hover {
+  border-color: rgba(102, 126, 234, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Textarea specific styling to match text inputs */
+textarea.form-input {
+  min-height: 120px;
+  line-height: 1.5;
+}
+
 .form-group input.error {
   border-color: #e74c3c;
   box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.1);

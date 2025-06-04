@@ -18,27 +18,32 @@
       </ul>
     </div>
   <% } %>
-  
-  <div class="add-classification-content">
-    <h2>Add New Classification</h2>
-    <p><strong>Note:</strong> Classification names cannot contain spaces or special characters of any kind.</p>
+    <div class="form-container">
+    <div class="form-header">
+      <h1>🏷️ Add New Classification</h1>
+      <p><strong>Note:</strong> Classification names cannot contain spaces or special characters of any kind.</p>
+    </div>
     
     <form id="addClassificationForm" action="/inv/add-classification" method="post">
       <div class="form-group">
-        <label for="classification_name">Classification Name:</label>
+        <label for="classification_name" class="form-label">Classification Name:</label>
         <input 
           type="text" 
           id="classification_name" 
           name="classification_name" 
+          class="form-input"
           required
           pattern="^[a-zA-Z0-9]+$"
           title="Only letters and numbers are allowed"
           value="<%= locals.classification_name || '' %>"
+          placeholder="Enter classification name"
         >
-        <span class="field-note">Only letters and numbers allowed</span>
+        <small class="field-note">Only letters and numbers allowed</small>
       </div>
       
-      <button type="submit" class="btn btn-primary">Add Classification</button>
+      <button type="submit" class="form-submit">
+        <span>Add Classification</span>
+      </button>
     </form>
   </div>
 </main>

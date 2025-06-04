@@ -18,148 +18,168 @@
       </ul>
     </div>
   <% } %>
-  
-  <div class="add-inventory-content">
-    <h2>Add New Vehicle</h2>
-    <p>All fields are required. Please ensure all information is accurate.</p>
+    <div class="form-container">
+    <div class="form-header">
+      <h1>🚗 Add New Vehicle</h1>
+      <p>All fields are required. Please ensure all information is accurate.</p>
+    </div>
     
     <form id="addInventoryForm" action="/inv/add-inventory" method="post">
       <div class="form-row">
         <div class="form-group">
-          <label for="classification_id">Classification:</label>
+          <label for="classification_id" class="form-label">Classification:</label>
           <%- classificationList %>
-          <span class="field-note">Select the vehicle classification</span>
+          <small class="field-note">Select the vehicle classification</small>
         </div>
       </div>
       
       <div class="form-row">
         <div class="form-group">
-          <label for="inv_make">Make:</label>
+          <label for="inv_make" class="form-label">Make:</label>
           <input 
             type="text" 
             id="inv_make" 
             name="inv_make" 
+            class="form-input"
             required
             minlength="3"
             value="<%= locals.inv_make || '' %>"
+            placeholder="e.g., Toyota"
           >
-          <span class="field-note">Minimum 3 characters</span>
+          <small class="field-note">Minimum 3 characters</small>
         </div>
         
         <div class="form-group">
-          <label for="inv_model">Model:</label>
+          <label for="inv_model" class="form-label">Model:</label>
           <input 
             type="text" 
             id="inv_model" 
             name="inv_model" 
+            class="form-input"
             required
             minlength="3"
             value="<%= locals.inv_model || '' %>"
+            placeholder="e.g., Camry"
           >
-          <span class="field-note">Minimum 3 characters</span>
+          <small class="field-note">Minimum 3 characters</small>
         </div>
       </div>
       
       <div class="form-row">
         <div class="form-group">
-          <label for="inv_year">Year:</label>
+          <label for="inv_year" class="form-label">Year:</label>
           <input 
             type="text" 
             id="inv_year" 
             name="inv_year" 
+            class="form-input"
             required
             pattern="[0-9]{4}"
             title="Must be exactly 4 digits"
             value="<%= locals.inv_year || '' %>"
+            placeholder="2024"
           >
-          <span class="field-note">4-digit year (e.g., 2024)</span>
+          <small class="field-note">4-digit year (e.g., 2024)</small>
         </div>
         
         <div class="form-group">
-          <label for="inv_color">Color:</label>
+          <label for="inv_color" class="form-label">Color:</label>
           <input 
             type="text" 
             id="inv_color" 
             name="inv_color" 
+            class="form-input"
             required
             minlength="1"
             value="<%= locals.inv_color || '' %>"
+            placeholder="e.g., Red"
           >
-          <span class="field-note">Vehicle color</span>
+          <small class="field-note">Vehicle color</small>
         </div>
       </div>
       
       <div class="form-row">
         <div class="form-group">
-          <label for="inv_price">Price:</label>
+          <label for="inv_price" class="form-label">Price:</label>
           <input 
             type="number" 
             id="inv_price" 
             name="inv_price" 
+            class="form-input"
             required
             min="0"
             step="0.01"
             value="<%= locals.inv_price || '' %>"
+            placeholder="25000.00"
           >
-          <span class="field-note">Decimal or integer (e.g., 25000 or 25000.50)</span>
+          <small class="field-note">Decimal or integer (e.g., 25000 or 25000.50)</small>
         </div>
         
         <div class="form-group">
-          <label for="inv_miles">Miles:</label>
+          <label for="inv_miles" class="form-label">Miles:</label>
           <input 
             type="number" 
             id="inv_miles" 
             name="inv_miles" 
+            class="form-input"
             required
             min="0"
             step="1"
             value="<%= locals.inv_miles || '' %>"
+            placeholder="39500"
           >
-          <span class="field-note">Digits only, no commas (e.g., 39500)</span>
+          <small class="field-note">Digits only, no commas (e.g., 39500)</small>
         </div>
       </div>
       
       <div class="form-row">
         <div class="form-group">
-          <label for="inv_image">Image Path:</label>
+          <label for="inv_image" class="form-label">Image Path:</label>
           <input 
             type="text" 
             id="inv_image" 
             name="inv_image" 
+            class="form-input"
             required
             value="<%= locals.inv_image || '/images/vehicles/no-image.png' %>"
+            placeholder="/images/vehicles/vehicle-name.jpg"
           >
-          <span class="field-note">Path to vehicle image</span>
+          <small class="field-note">Path to vehicle image</small>
         </div>
         
         <div class="form-group">
-          <label for="inv_thumbnail">Thumbnail Path:</label>
+          <label for="inv_thumbnail" class="form-label">Thumbnail Path:</label>
           <input 
             type="text" 
             id="inv_thumbnail" 
             name="inv_thumbnail" 
+            class="form-input"
             required
             value="<%= locals.inv_thumbnail || '/images/vehicles/no-image-tn.png' %>"
+            placeholder="/images/vehicles/vehicle-name-tn.jpg"
           >
-          <span class="field-note">Path to thumbnail image</span>
+          <small class="field-note">Path to thumbnail image</small>
         </div>
       </div>
-      
-      <div class="form-row">
-        <div class="form-group full-width">
-          <label for="inv_description">Description:</label>
+        <div class="form-row">
+        <div class="form-group">
+          <label for="inv_description" class="form-label">Description:</label>
           <textarea 
             id="inv_description" 
             name="inv_description" 
+            class="form-input"
             required
             rows="4"
             minlength="1"
+            placeholder="Enter detailed vehicle description..."
           ><%= locals.inv_description || '' %></textarea>
-          <span class="field-note">Detailed vehicle description</span>
+          <small class="field-note">Detailed vehicle description</small>
         </div>
       </div>
       
-      <button type="submit" class="btn btn-primary">Add Vehicle</button>
+      <button type="submit" class="form-submit">
+        <span>Add Vehicle</span>
+      </button>
     </form>
   </div>
 </main>
