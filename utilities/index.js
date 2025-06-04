@@ -22,6 +22,7 @@ async function getNav(){
       "</span></a>"
     list += "</li>"
   })
+  list += '<li role="none"><a href="/account/login" title="Login" role="menuitem" itemprop="url"><span itemprop="name">My Account</span></a></li>'
   list += "</ul>"
   return list
 }

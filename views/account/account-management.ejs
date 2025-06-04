@@ -1,0 +1,14 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } else {res.redirect('/')} %>
+
+<%- messages() %>
+
+<p>You're logged in.</p>
+
+<h2>Account Management</h2>
+<p>Welcome to your account dashboard.</p>
+
+<ul>
+  <li><a href="/account/logout">Logout</a></li>
+</ul>
