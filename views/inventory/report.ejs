@@ -1,0 +1,171 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<%- include('../partials/navigation') %>
+
+<main id="main-content" class="page-content">
+  <h1 class="page-title"><%= title %></h1>
+  
+  <% if (errors) { %>
+    <div class="notice error-notice">
+      <% errors.forEach(error => { %>
+        <p><%= error %></p>
+      <% }); %>
+    </div>
+  <% } %>
+
+  <div class="dashboard-grid">
+    <!-- Overall Statistics Card -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <i class="fas fa-chart-bar" aria-hidden="true"></i>
+        <h2>Overall Statistics</h2>
+      </div>
+      <div class="card-content">
+        <% if (stats) { %>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <span class="stat-label">Total Vehicles:</span>
+              <span class="stat-value"><%= stats.total_vehicles %></span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Classifications:</span>
+              <span class="stat-value"><%= stats.total_classifications %></span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Average Price:</span>
+              <span class="stat-value">$<%= Number(stats.average_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Total Value:</span>
+              <span class="stat-value">$<%= Number(stats.total_value).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Price Range:</span>
+              <span class="stat-value">$<%= Number(stats.min_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %> - $<%= Number(stats.max_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></span>
+            </div>
+          </div>
+        <% } else { %>
+          <p class="notice">No statistics available at this time.</p>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Classification Breakdown Card -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <i class="fas fa-list-alt" aria-hidden="true"></i>
+        <h2>Classification Breakdown</h2>
+      </div>
+      <div class="card-content">
+        <% if (classificationStats && classificationStats.length > 0) { %>
+          <div class="table-container">
+            <table class="report-table">
+              <thead>
+                <tr>
+                  <th>Classification</th>
+                  <th>Vehicle Count</th>
+                  <th>Avg Price</th>
+                  <th>Price Range</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% classificationStats.forEach(stat => { %>
+                  <tr>
+                    <td><%= stat.classification_name %></td>
+                    <td><%= stat.vehicle_count %></td>
+                    <td>
+                      <% if (stat.avg_price) { %>
+                        $<%= Number(stat.avg_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
+                      <% } else { %>
+                        N/A
+                      <% } %>
+                    </td>
+                    <td>
+                      <% if (stat.min_price && stat.max_price) { %>
+                        $<%= Number(stat.min_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %> - $<%= Number(stat.max_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
+                      <% } else { %>
+                        N/A
+                      <% } %>
+                    </td>
+                  </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+        <% } else { %>
+          <p class="notice">No classification data available.</p>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Recent Vehicles Card -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <i class="fas fa-clock" aria-hidden="true"></i>
+        <h2>Recently Added Vehicles</h2>
+      </div>
+      <div class="card-content">
+        <% if (recentVehicles && recentVehicles.length > 0) { %>
+          <div class="table-container">
+            <table class="report-table">
+              <thead>
+                <tr>
+                  <th>Vehicle</th>
+                  <th>Classification</th>
+                  <th>Price</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% recentVehicles.forEach(vehicle => { %>
+                  <tr>
+                    <td><%= vehicle.inv_year %> <%= vehicle.inv_make %> <%= vehicle.inv_model %></td>
+                    <td><%= vehicle.classification_name %></td>
+                    <td>$<%= Number(vehicle.inv_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></td>
+                    <td>
+                      <a href="/inv/detail/<%= vehicle.inv_id %>" class="btn btn-primary btn-sm">View Details</a>
+                    </td>
+                  </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+        <% } else { %>
+          <p class="notice">No recent vehicles found.</p>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Report Actions Card -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <i class="fas fa-file-export" aria-hidden="true"></i>
+        <h2>Report Actions</h2>
+      </div>
+      <div class="card-content">
+        <div class="action-buttons">
+          <button type="button" class="btn btn-secondary" onclick="window.print()">
+            <i class="fas fa-print" aria-hidden="true"></i>
+            Print Report
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="exportToCSV()">
+            <i class="fas fa-download" aria-hidden="true"></i>
+            Export to CSV
+          </button>
+          <a href="/inv" class="btn btn-primary">
+            <i class="fas fa-arrow-left" aria-hidden="true"></i>
+            Back to Management
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+function exportToCSV() {
+  alert('CSV export functionality would be implemented here. This is a demo placeholder.');
+}
+</script>
+
+<%- include('../partials/footer') %>

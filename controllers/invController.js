@@ -245,4 +245,48 @@ invCont.triggerError = async function (req, res, next) {
   }
 }
 
+/* ***************************
+ *  Build inventory reports view
+ * ************************** */
+invCont.buildInventoryReport = async function (req, res, next) {
+  try {
+    let nav = await utilities.getNav()
+    
+    // Get inventory statistics
+    const stats = await invModel.getInventoryStats()
+    const classificationStats = await invModel.getClassificationStats()
+    const recentVehicles = await invModel.getRecentVehicles()
+    
+    res.render("./inventory/report", {
+      title: "Inventory Reports & Analytics",
+      nav,
+      stats,
+      classificationStats,
+      recentVehicles,
+      errors: null,
+    })
+  } catch (error) {
+    console.error("Error in buildInventoryReport:", error)
+    next(error)
+  }
+}
+
+/* ***************************
+ *  Build management tools view
+ * ************************** */
+invCont.buildManagementTools = async function (req, res, next) {
+  try {
+    let nav = await utilities.getNav()
+    
+    res.render("./inventory/tools", {
+      title: "Management Tools",
+      nav,
+      errors: null,
+    })
+  } catch (error) {
+    console.error("Error in buildManagementTools:", error)
+    next(error)
+  }
+}
+
 module.exports = invCont

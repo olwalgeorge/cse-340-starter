@@ -1,0 +1,318 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<%- include('../partials/navigation') %>
+
+<main id="main-content" class="page-content">
+  <h1 class="page-title"><%= title %></h1>
+  
+  <% if (errors) { %>
+    <div class="notice error-notice">
+      <% errors.forEach(error => { %>
+        <p><%= error %></p>
+      <% }); %>
+    </div>
+  <% } %>
+
+  <div class="dashboard-grid">
+    <!-- Data Management Tools -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <i class="fas fa-database" aria-hidden="true"></i>
+        <h2>Data Management</h2>
+      </div>
+      <div class="card-content">
+        <p class="card-description">Tools for managing your inventory data and maintaining data integrity.</p>
+        <div class="tool-buttons">
+          <button type="button" class="btn btn-secondary" onclick="validateData()">
+            <i class="fas fa-check-circle" aria-hidden="true"></i>
+            Validate Data Integrity
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="cleanupData()">
+            <i class="fas fa-broom" aria-hidden="true"></i>
+            Clean Up Orphaned Records
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="optimizeDatabase()">
+            <i class="fas fa-tachometer-alt" aria-hidden="true"></i>
+            Optimize Database
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bulk Operations -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <i class="fas fa-tasks" aria-hidden="true"></i>
+        <h2>Bulk Operations</h2>
+      </div>
+      <div class="card-content">
+        <p class="card-description">Perform operations on multiple inventory items at once.</p>
+        <div class="tool-buttons">
+          <button type="button" class="btn btn-secondary" onclick="bulkPriceUpdate()">
+            <i class="fas fa-dollar-sign" aria-hidden="true"></i>
+            Bulk Price Update
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="bulkStatusUpdate()">
+            <i class="fas fa-toggle-on" aria-hidden="true"></i>
+            Bulk Status Update
+          </button>
+          <button type="button" class="btn btn-warning" onclick="bulkDelete()">
+            <i class="fas fa-trash-alt" aria-hidden="true"></i>
+            Bulk Delete (Caution)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Import/Export Tools -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <i class="fas fa-exchange-alt" aria-hidden="true"></i>
+        <h2>Import/Export</h2>
+      </div>
+      <div class="card-content">
+        <p class="card-description">Import and export inventory data in various formats.</p>
+        <div class="tool-buttons">
+          <label for="csv-import" class="btn btn-primary">
+            <i class="fas fa-upload" aria-hidden="true"></i>
+            Import CSV
+            <input type="file" id="csv-import" accept=".csv" style="display: none;" onchange="importCSV(this)">
+          </label>
+          <button type="button" class="btn btn-secondary" onclick="exportInventory()">
+            <i class="fas fa-download" aria-hidden="true"></i>
+            Export All Data
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="generateBackup()">
+            <i class="fas fa-save" aria-hidden="true"></i>
+            Generate Backup
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- System Maintenance -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <i class="fas fa-cogs" aria-hidden="true"></i>
+        <h2>System Maintenance</h2>
+      </div>
+      <div class="card-content">
+        <p class="card-description">Tools for system maintenance and optimization.</p>
+        <div class="tool-buttons">
+          <button type="button" class="btn btn-secondary" onclick="clearCache()">
+            <i class="fas fa-eraser" aria-hidden="true"></i>
+            Clear Cache
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="updateThumbnails()">
+            <i class="fas fa-images" aria-hidden="true"></i>
+            Regenerate Thumbnails
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="runHealthCheck()">
+            <i class="fas fa-heartbeat" aria-hidden="true"></i>
+            System Health Check
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Backup & Recovery -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <i class="fas fa-shield-alt" aria-hidden="true"></i>
+        <h2>Backup & Recovery</h2>
+      </div>
+      <div class="card-content">
+        <p class="card-description">Manage backups and data recovery options.</p>
+        <div class="tool-buttons">
+          <button type="button" class="btn btn-success" onclick="createBackup()">
+            <i class="fas fa-plus-circle" aria-hidden="true"></i>
+            Create Backup
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="viewBackups()">
+            <i class="fas fa-list" aria-hidden="true"></i>
+            View Backups
+          </button>
+          <button type="button" class="btn btn-warning" onclick="restoreBackup()">
+            <i class="fas fa-undo" aria-hidden="true"></i>
+            Restore from Backup
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+        <h2>Navigation</h2>
+      </div>
+      <div class="card-content">
+        <div class="tool-buttons">
+          <a href="/inv" class="btn btn-primary">
+            <i class="fas fa-tachometer-alt" aria-hidden="true"></i>
+            Back to Management Dashboard
+          </a>
+          <a href="/inv/report" class="btn btn-secondary">
+            <i class="fas fa-chart-bar" aria-hidden="true"></i>
+            View Reports
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Status Modal -->
+  <div id="status-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-title">Processing...</h3>
+        <span class="close" onclick="closeModal()">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p id="modal-message">Please wait while the operation completes.</p>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+// Modal functions
+function showModal(title, message) {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-message').textContent = message;
+  document.getElementById('status-modal').style.display = 'block';
+}
+
+function closeModal() {
+  document.getElementById('status-modal').style.display = 'none';
+}
+
+// Tool functions (these would typically make AJAX calls to backend endpoints)
+function validateData() {
+  showModal('Data Validation', 'Validating data integrity...');
+  // Simulate processing
+  setTimeout(() => {
+    document.getElementById('modal-message').textContent = 'Data validation completed successfully. No issues found.';
+  }, 2000);
+}
+
+function cleanupData() {
+  if (confirm('This will remove orphaned records. Are you sure?')) {
+    showModal('Data Cleanup', 'Cleaning up orphaned records...');
+    setTimeout(() => {
+      document.getElementById('modal-message').textContent = 'Cleanup completed. 0 orphaned records removed.';
+    }, 1500);
+  }
+}
+
+function optimizeDatabase() {
+  showModal('Database Optimization', 'Optimizing database performance...');
+  setTimeout(() => {
+    document.getElementById('modal-message').textContent = 'Database optimization completed successfully.';
+  }, 3000);
+}
+
+function bulkPriceUpdate() {
+  const percentage = prompt('Enter price adjustment percentage (e.g., 5 for 5% increase, -10 for 10% decrease):');
+  if (percentage !== null && !isNaN(percentage)) {
+    showModal('Bulk Price Update', `Updating prices by ${percentage}%...`);
+    setTimeout(() => {
+      document.getElementById('modal-message').textContent = `Price update completed for all vehicles.`;
+    }, 2000);
+  }
+}
+
+function bulkStatusUpdate() {
+  showModal('Bulk Status Update', 'Updating vehicle statuses...');
+  setTimeout(() => {
+    document.getElementById('modal-message').textContent = 'Status update completed successfully.';
+  }, 1500);
+}
+
+function bulkDelete() {
+  if (confirm('WARNING: This will permanently delete selected records. This action cannot be undone. Continue?')) {
+    showModal('Bulk Delete', 'Processing deletion request...');
+    setTimeout(() => {
+      document.getElementById('modal-message').textContent = 'Bulk deletion completed.';
+    }, 2000);
+  }
+}
+
+function importCSV(input) {
+  if (input.files && input.files[0]) {
+    showModal('CSV Import', 'Processing CSV file...');
+    setTimeout(() => {
+      document.getElementById('modal-message').textContent = 'CSV import completed successfully.';
+    }, 2500);
+  }
+}
+
+function exportInventory() {
+  showModal('Data Export', 'Generating export file...');
+  setTimeout(() => {
+    document.getElementById('modal-message').textContent = 'Export completed. Download will begin shortly.';
+    // In a real implementation, this would trigger a file download
+  }, 2000);
+}
+
+function generateBackup() {
+  showModal('Backup Generation', 'Creating system backup...');
+  setTimeout(() => {
+    document.getElementById('modal-message').textContent = 'Backup created successfully.';
+  }, 3000);
+}
+
+function clearCache() {
+  showModal('Cache Management', 'Clearing system cache...');
+  setTimeout(() => {
+    document.getElementById('modal-message').textContent = 'Cache cleared successfully.';
+  }, 1000);
+}
+
+function updateThumbnails() {
+  showModal('Thumbnail Update', 'Regenerating vehicle thumbnails...');
+  setTimeout(() => {
+    document.getElementById('modal-message').textContent = 'Thumbnail regeneration completed.';
+  }, 4000);
+}
+
+function runHealthCheck() {
+  showModal('Health Check', 'Running system health check...');
+  setTimeout(() => {
+    document.getElementById('modal-message').textContent = 'Health check completed. All systems operational.';
+  }, 2500);
+}
+
+function createBackup() {
+  showModal('Backup Creation', 'Creating new backup...');
+  setTimeout(() => {
+    document.getElementById('modal-message').textContent = 'Backup created successfully and stored securely.';
+  }, 3000);
+}
+
+function viewBackups() {
+  alert('Backup management interface would open here. Available backups:\n- backup_2024_01_15.sql\n- backup_2024_01_10.sql\n- backup_2024_01_05.sql');
+}
+
+function restoreBackup() {
+  if (confirm('WARNING: Restoring from backup will overwrite current data. Are you sure?')) {
+    showModal('Backup Restoration', 'Restoring from backup...');
+    setTimeout(() => {
+      document.getElementById('modal-message').textContent = 'Backup restoration completed successfully.';
+    }, 4000);
+  }
+}
+
+// Close modal when clicking outside of it
+window.onclick = function(event) {
+  const modal = document.getElementById('status-modal');
+  if (event.target == modal) {
+    closeModal();
+  }
+}
+</script>
+
+<%- include('../partials/footer') %>

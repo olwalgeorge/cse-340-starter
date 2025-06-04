@@ -37,4 +37,10 @@ router.post("/add-inventory",
   utilities.handleErrors(invController.addInventory)
 );
 
+// Route to build inventory reports view
+router.get("/report", utilities.handleErrors(invController.buildInventoryReport));
+
+// Route to build management tools view
+router.get("/tools", utilities.handleErrors(invController.buildManagementTools));
+
 module.exports = router;

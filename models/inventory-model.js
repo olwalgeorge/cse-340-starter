@@ -67,4 +67,87 @@ async function addInventory(inv_make, inv_model, inv_year, inv_description, inv_
   }
 }
 
-module.exports = { getClassifications, getInventoryByClassificationId, getVehicleById, addClassification, addInventory }
+/* ***************************
+ *  Get inventory statistics for reports
+ * ************************** */
+async function getInventoryStats() {
+  try {
+    const sql = `
+      SELECT 
+        COUNT(*) as total_vehicles,
+        COUNT(DISTINCT classification_id) as total_classifications,
+        AVG(inv_price) as average_price,
+        MIN(inv_price) as min_price,
+        MAX(inv_price) as max_price,
+        SUM(inv_price) as total_value
+      FROM inventory
+    `
+    const data = await pool.query(sql)
+    return data.rows[0]
+  } catch (error) {
+    console.error("getInventoryStats error " + error)
+    return null
+  }
+}
+
+/* ***************************
+ *  Get classification statistics for reports
+ * ************************** */
+async function getClassificationStats() {
+  try {
+    const sql = `
+      SELECT 
+        c.classification_name,
+        COUNT(i.inv_id) as vehicle_count,
+        AVG(i.inv_price) as avg_price,
+        MIN(i.inv_price) as min_price,
+        MAX(i.inv_price) as max_price
+      FROM classification c
+      LEFT JOIN inventory i ON c.classification_id = i.classification_id
+      GROUP BY c.classification_id, c.classification_name
+      ORDER BY vehicle_count DESC
+    `
+    const data = await pool.query(sql)
+    return data.rows
+  } catch (error) {
+    console.error("getClassificationStats error " + error)
+    return []
+  }
+}
+
+/* ***************************
+ *  Get recently added vehicles for reports
+ * ************************** */
+async function getRecentVehicles() {
+  try {
+    const sql = `
+      SELECT 
+        i.inv_id,
+        i.inv_make,
+        i.inv_model,
+        i.inv_year,
+        i.inv_price,
+        c.classification_name
+      FROM inventory i
+      JOIN classification c ON i.classification_id = c.classification_id
+      ORDER BY i.inv_id DESC
+      LIMIT 10
+    `
+    const data = await pool.query(sql)
+    return data.rows
+  } catch (error) {
+    console.error("getRecentVehicles error " + error)
+    return []
+  }
+}
+
+module.exports = { 
+  getClassifications, 
+  getInventoryByClassificationId, 
+  getVehicleById, 
+  addClassification, 
+  addInventory,
+  getInventoryStats,
+  getClassificationStats,
+  getRecentVehicles
+}
