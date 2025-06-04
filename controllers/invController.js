@@ -133,6 +133,105 @@ invCont.addClassification = async function (req, res, next) {
 }
 
 /* ***************************
+ *  Build add inventory view
+ * ************************** */
+invCont.buildAddInventory = async function (req, res, next) {
+  try {
+    let nav = await utilities.getNav()
+    let classificationList = await utilities.buildClassificationList()
+    res.render("./inventory/add-inventory", {
+      title: "Add New Vehicle",
+      nav,
+      classificationList,
+      errors: null,
+    })
+  } catch (error) {
+    console.error("Error in buildAddInventory:", error)
+    next(error)
+  }
+}
+
+/* ***************************
+ *  Process Add Inventory
+ * ************************** */
+invCont.addInventory = async function (req, res, next) {
+  const { 
+    inv_make, 
+    inv_model, 
+    inv_year, 
+    inv_description, 
+    inv_image, 
+    inv_thumbnail, 
+    inv_price, 
+    inv_miles, 
+    inv_color, 
+    classification_id 
+  } = req.body
+  
+  try {
+    const regResult = await invModel.addInventory(
+      inv_make, 
+      inv_model, 
+      inv_year, 
+      inv_description, 
+      inv_image, 
+      inv_thumbnail, 
+      inv_price, 
+      inv_miles, 
+      inv_color, 
+      classification_id
+    )
+    
+    if (regResult) {
+      req.flash("notice", `Congratulations, you added the ${inv_year} ${inv_make} ${inv_model}.`)
+      let nav = await utilities.getNav()
+      res.status(201).render("inventory/management", {
+        title: "Vehicle Management",
+        nav,
+      })
+    } else {
+      req.flash("notice", "Sorry, adding the vehicle failed.")
+      let nav = await utilities.getNav()
+      let classificationList = await utilities.buildClassificationList(classification_id)
+      res.status(501).render("inventory/add-inventory", {
+        title: "Add New Vehicle",
+        nav,
+        classificationList,
+        errors: null,
+        inv_make,
+        inv_model,
+        inv_year,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_miles,
+        inv_color
+      })
+    }
+  } catch (error) {
+    req.flash("notice", 'Sorry, there was an error processing the vehicle.')
+    let nav = await utilities.getNav()
+    let classificationList = await utilities.buildClassificationList(classification_id)
+    res.status(500).render("inventory/add-inventory", {
+      title: "Add New Vehicle",
+      nav,
+      classificationList,
+      errors: null,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color
+    })
+  }
+}
+
+/* ***************************
  *  Intentional Error Route (Task 3)
  *  This route is designed to trigger a 500 error for testing
  * ************************** */

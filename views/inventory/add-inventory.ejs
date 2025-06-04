@@ -1,0 +1,251 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<%- include('../partials/navigation') %>
+
+<main>
+  <h1><%= title %></h1>
+  <%- include('../partials/breadcrumbs') %>
+  
+  <%# Flash message handling %>
+  <%- messages() %>
+  
+  <%# Display any validation errors %>
+  <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+    <div class="error-messages">
+      <ul>
+        <% errors.forEach(error => { %>
+          <li><%= error.msg %></li>
+        <% }) %>
+      </ul>
+    </div>
+  <% } %>
+  
+  <div class="add-inventory-content">
+    <h2>Add New Vehicle</h2>
+    <p>All fields are required. Please ensure all information is accurate.</p>
+    
+    <form id="addInventoryForm" action="/inv/add-inventory" method="post">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="classification_id">Classification:</label>
+          <%- classificationList %>
+          <span class="field-note">Select the vehicle classification</span>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="inv_make">Make:</label>
+          <input 
+            type="text" 
+            id="inv_make" 
+            name="inv_make" 
+            required
+            minlength="3"
+            value="<%= locals.inv_make || '' %>"
+          >
+          <span class="field-note">Minimum 3 characters</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="inv_model">Model:</label>
+          <input 
+            type="text" 
+            id="inv_model" 
+            name="inv_model" 
+            required
+            minlength="3"
+            value="<%= locals.inv_model || '' %>"
+          >
+          <span class="field-note">Minimum 3 characters</span>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="inv_year">Year:</label>
+          <input 
+            type="text" 
+            id="inv_year" 
+            name="inv_year" 
+            required
+            pattern="[0-9]{4}"
+            title="Must be exactly 4 digits"
+            value="<%= locals.inv_year || '' %>"
+          >
+          <span class="field-note">4-digit year (e.g., 2024)</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="inv_color">Color:</label>
+          <input 
+            type="text" 
+            id="inv_color" 
+            name="inv_color" 
+            required
+            minlength="1"
+            value="<%= locals.inv_color || '' %>"
+          >
+          <span class="field-note">Vehicle color</span>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="inv_price">Price:</label>
+          <input 
+            type="number" 
+            id="inv_price" 
+            name="inv_price" 
+            required
+            min="0"
+            step="0.01"
+            value="<%= locals.inv_price || '' %>"
+          >
+          <span class="field-note">Decimal or integer (e.g., 25000 or 25000.50)</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="inv_miles">Miles:</label>
+          <input 
+            type="number" 
+            id="inv_miles" 
+            name="inv_miles" 
+            required
+            min="0"
+            step="1"
+            value="<%= locals.inv_miles || '' %>"
+          >
+          <span class="field-note">Digits only, no commas (e.g., 39500)</span>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="inv_image">Image Path:</label>
+          <input 
+            type="text" 
+            id="inv_image" 
+            name="inv_image" 
+            required
+            value="<%= locals.inv_image || '/images/vehicles/no-image.png' %>"
+          >
+          <span class="field-note">Path to vehicle image</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="inv_thumbnail">Thumbnail Path:</label>
+          <input 
+            type="text" 
+            id="inv_thumbnail" 
+            name="inv_thumbnail" 
+            required
+            value="<%= locals.inv_thumbnail || '/images/vehicles/no-image-tn.png' %>"
+          >
+          <span class="field-note">Path to thumbnail image</span>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="inv_description">Description:</label>
+          <textarea 
+            id="inv_description" 
+            name="inv_description" 
+            required
+            rows="4"
+            minlength="1"
+          ><%= locals.inv_description || '' %></textarea>
+          <span class="field-note">Detailed vehicle description</span>
+        </div>
+      </div>
+      
+      <button type="submit" class="btn btn-primary">Add Vehicle</button>
+    </form>
+  </div>
+</main>
+
+<script>
+// Client-side validation
+document.getElementById('addInventoryForm').addEventListener('submit', function(e) {
+  let isValid = true;
+  let errors = [];
+  
+  // Year validation
+  const year = document.getElementById('inv_year').value;
+  if (!/^[0-9]{4}$/.test(year)) {
+    isValid = false;
+    errors.push('Year must be exactly 4 digits');
+  }
+  
+  // Miles validation (digits only, no commas)
+  const miles = document.getElementById('inv_miles').value;
+  if (!/^[0-9]+$/.test(miles)) {
+    isValid = false;
+    errors.push('Miles must be digits only, no commas or spaces');
+  }
+  
+  // Price validation
+  const price = document.getElementById('inv_price').value;
+  if (!/^[0-9]+(\.[0-9]{1,2})?$/.test(price)) {
+    isValid = false;
+    errors.push('Price must be a valid number (decimal or integer)');
+  }
+  
+  // Classification validation
+  const classification = document.getElementById('classificationList').value;
+  if (!classification) {
+    isValid = false;
+    errors.push('Please select a classification');
+  }
+  
+  if (!isValid) {
+    e.preventDefault();
+    alert('Please fix the following errors:\n' + errors.join('\n'));
+    return false;
+  }
+});
+
+// Real-time validation feedback
+function addValidationClass(input, isValid) {
+  if (isValid) {
+    input.classList.add('valid');
+    input.classList.remove('invalid');
+  } else {
+    input.classList.add('invalid');
+    input.classList.remove('valid');
+  }
+}
+
+// Year validation
+document.getElementById('inv_year').addEventListener('input', function() {
+  const isValid = /^[0-9]{4}$/.test(this.value);
+  addValidationClass(this, isValid || this.value.length === 0);
+});
+
+// Miles validation
+document.getElementById('inv_miles').addEventListener('input', function() {
+  const isValid = /^[0-9]+$/.test(this.value);
+  addValidationClass(this, isValid || this.value.length === 0);
+});
+
+// Price validation
+document.getElementById('inv_price').addEventListener('input', function() {
+  const isValid = /^[0-9]+(\.[0-9]{1,2})?$/.test(this.value);
+  addValidationClass(this, isValid || this.value.length === 0);
+});
+
+// Make validation
+document.getElementById('inv_make').addEventListener('input', function() {
+  const isValid = this.value.length >= 3;
+  addValidationClass(this, isValid || this.value.length === 0);
+});
+
+// Model validation
+document.getElementById('inv_model').addEventListener('input', function() {
+  const isValid = this.value.length >= 3;
+  addValidationClass(this, isValid || this.value.length === 0);
+});
+</script>
+
+<%- include('../partials/footer') %>

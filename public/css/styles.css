@@ -1898,3 +1898,104 @@ a:focus, button:focus {
     font-size: 1rem;
   }
 }
+
+/* Form Validation Styles */
+.form-group input.valid,
+.form-group textarea.valid,
+.form-group select.valid {
+  border-color: #28a745;
+  background-color: #f8fff8;
+}
+
+.form-group input.invalid,
+.form-group textarea.invalid,
+.form-group select.invalid {
+  border-color: #dc3545;
+  background-color: #fff8f8;
+}
+
+.form-group input.valid:focus,
+.form-group textarea.valid:focus,
+.form-group select.valid:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+.form-group input.invalid:focus,
+.form-group textarea.invalid:focus,
+.form-group select.invalid:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+/* Error Messages */
+.error-messages {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.error-messages ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+/* Management View Styles */
+.management-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.management-links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.management-links .btn {
+  flex: 1;
+  max-width: 250px;
+}
+
+/* Add Classification Styles */
+.add-classification-content,
+.add-inventory-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.add-inventory-content .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.add-inventory-content .form-row .form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.field-note {
+  font-size: 0.875rem;
+  color: #666;
+  font-style: italic;
+  display: block;
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 768px) {
+  .management-links {
+    flex-direction: column;
+  }
+  
+  .add-inventory-content .form-row {
+    grid-template-columns: 1fr;
+  }
+}
