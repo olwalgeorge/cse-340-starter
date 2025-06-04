@@ -1408,7 +1408,7 @@ textarea.form-input {
 .form-container button[type="submit"].loading,
 .form-container input[type="submit"].loading {
   color: transparent;
-  pointer-events: none;
+  cursor: not-allowed;
 }
 
 .form-container button[type="submit"].loading::after,
@@ -1504,7 +1504,7 @@ textarea.form-input {
 /* Loading State */
 .form-submit.loading {
   color: transparent;
-  pointer-events: none;
+  cursor: not-allowed;
 }
 
 .form-submit.loading::after {
@@ -1812,7 +1812,7 @@ textarea.form-input {
 }
 
 /* Accessibility Enhancements */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
   .form-input {
     border-width: 3px;
   }
