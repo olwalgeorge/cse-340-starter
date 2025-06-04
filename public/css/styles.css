@@ -1633,6 +1633,7 @@ a:focus, button:focus {
     color: #000 !important;
     background: transparent !important;
     -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   body {
