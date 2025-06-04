@@ -66,6 +66,22 @@ invCont.buildVehicleDetail = async function (req, res, next) {
 }
 
 /* ***************************
+ *  Build inventory management view
+ * ************************** */
+invCont.buildManagement = async function (req, res, next) {
+  try {
+    let nav = await utilities.getNav()
+    res.render("./inventory/management", {
+      title: "Vehicle Management",
+      nav,
+    })
+  } catch (error) {
+    console.error("Error in buildManagement:", error)
+    next(error)
+  }
+}
+
+/* ***************************
  *  Intentional Error Route (Task 3)
  *  This route is designed to trigger a 500 error for testing
  * ************************** */

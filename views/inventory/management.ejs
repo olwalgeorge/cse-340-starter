@@ -1,0 +1,23 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<%- include('../partials/navigation') %>
+
+<main>
+  <h1><%= title %></h1>
+  <%- include('../partials/breadcrumbs') %>
+  
+  <%# Flash message handling %>
+  <%- messages() %>
+  
+  <div class="management-content">
+    <h2>Inventory Management</h2>
+    <p>Welcome to the inventory management system. Here you can add new vehicle classifications and inventory items.</p>
+    
+    <div class="management-links">
+      <a href="/inv/add-classification" class="btn btn-primary">Add New Classification</a>
+      <a href="/inv/add-inventory" class="btn btn-primary">Add New Vehicle</a>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>
