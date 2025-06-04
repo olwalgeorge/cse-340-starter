@@ -82,6 +82,57 @@ invCont.buildManagement = async function (req, res, next) {
 }
 
 /* ***************************
+ *  Build add classification view
+ * ************************** */
+invCont.buildAddClassification = async function (req, res, next) {
+  try {
+    let nav = await utilities.getNav()
+    res.render("./inventory/add-classification", {
+      title: "Add New Classification",
+      nav,
+      errors: null,
+    })
+  } catch (error) {
+    console.error("Error in buildAddClassification:", error)
+    next(error)
+  }
+}
+
+/* ***************************
+ *  Process Add Classification
+ * ************************** */
+invCont.addClassification = async function (req, res, next) {
+  const { classification_name } = req.body
+  
+  try {
+    const regResult = await invModel.addClassification(classification_name)
+    
+    if (regResult) {
+      req.flash("notice", `Congratulations, you added "${classification_name}" classification.`)
+      let nav = await utilities.getNav() // Rebuild nav to show new classification
+      res.status(201).render("inventory/management", {
+        title: "Vehicle Management",
+        nav,
+      })
+    } else {
+      req.flash("notice", "Sorry, adding the classification failed.")
+      res.status(501).render("inventory/add-classification", {
+        title: "Add New Classification",
+        nav: await utilities.getNav(),
+        errors: null,
+      })
+    }
+  } catch (error) {
+    req.flash("notice", 'Sorry, there was an error processing the classification.')
+    res.status(500).render("inventory/add-classification", {
+      title: "Add New Classification",
+      nav: await utilities.getNav(),
+      errors: null,
+    })
+  }
+}
+
+/* ***************************
  *  Intentional Error Route (Task 3)
  *  This route is designed to trigger a 500 error for testing
  * ************************** */
