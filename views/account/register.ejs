@@ -5,32 +5,178 @@
 <%- messages() %>
 
 <% if (errors) { %>
-  <ul class="notice">
-    <% errors.array().forEach(error => { %>
-      <li><%= error.msg %></li>
-    <%})%>
-  </ul>
+  <div class="error-messages" role="alert" aria-live="polite">
+    <h2>Please correct the following errors:</h2>
+    <ul class="error-list">
+      <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+      <%})%>
+    </ul>
+  </div>
 <% } %>
 
-<form id="registrationForm" action="/account/register" method="post">
-  <fieldset>
-    <legend>Account Information</legend>
-    
-    <label for="accountFirstname">First Name:</label>
-    <input type="text" name="account_firstname" id="accountFirstname" required value="<%= locals.account_firstname %>">
-    
-    <label for="accountLastname">Last Name:</label>
-    <input type="text" name="account_lastname" id="accountLastname" required value="<%= locals.account_lastname %>">
-    
-    <label for="accountEmail">Email:</label>
-    <input type="email" name="account_email" id="accountEmail" required value="<%= locals.account_email %>">
-    
-    <label for="accountPassword">Password:</label>
-    <span>Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</span>
-    <input type="password" name="account_password" id="accountPassword" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=\[\]{};':\"\\|,.<>\/?]).{12,}$">
-    
-    <input type="submit" value="Register">
-  </fieldset>
-</form>
+<div class="form-container">
+  <form id="registrationForm" action="/account/register" method="post" novalidate>
+    <fieldset>
+      <legend>Create Your Account</legend>
+      
+      <div class="form-group">
+        <label for="accountFirstname">
+          First Name <span class="required" aria-label="required">*</span>
+        </label>
+        <input 
+          type="text" 
+          name="account_firstname" 
+          id="accountFirstname" 
+          required 
+          autocomplete="given-name"
+          aria-describedby="firstname-help"
+          value="<%= locals.account_firstname || '' %>"
+          placeholder="Enter your first name"
+        >
+        <small id="firstname-help" class="help-text">Your first name (minimum 1 character)</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="accountLastname">
+          Last Name <span class="required" aria-label="required">*</span>
+        </label>
+        <input 
+          type="text" 
+          name="account_lastname" 
+          id="accountLastname" 
+          required 
+          autocomplete="family-name"
+          aria-describedby="lastname-help"
+          value="<%= locals.account_lastname || '' %>"
+          placeholder="Enter your last name"
+        >
+        <small id="lastname-help" class="help-text">Your last name (minimum 2 characters)</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="accountEmail">
+          Email Address <span class="required" aria-label="required">*</span>
+        </label>
+        <input 
+          type="email" 
+          name="account_email" 
+          id="accountEmail" 
+          required 
+          autocomplete="email"
+          aria-describedby="email-help"
+          value="<%= locals.account_email || '' %>"
+          placeholder="Enter your email address"
+        >
+        <small id="email-help" class="help-text">We'll use this for login and important notifications</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="accountPassword">
+          Password <span class="required" aria-label="required">*</span>
+        </label>
+        <div class="password-wrapper">          <input 
+            type="password" 
+            name="account_password" 
+            id="accountPassword" 
+            required 
+            autocomplete="new-password"
+            aria-describedby="password-requirements"
+            placeholder="Create a strong password"
+          >
+          <button type="button" class="password-toggle" aria-label="Show password">
+            <span class="show-text">👁️</span>
+            <span class="hide-text" style="display: none;">🙈</span>
+          </button>
+        </div>
+        <div id="password-requirements" class="password-requirements">
+          <p>Password must contain:</p>
+          <ul>
+            <li id="length-check">At least 12 characters</li>
+            <li id="lowercase-check">At least 1 lowercase letter (a-z)</li>
+            <li id="uppercase-check">At least 1 uppercase letter (A-Z)</li>
+            <li id="number-check">At least 1 number (0-9)</li>
+            <li id="symbol-check">At least 1 special character (!@#$%^&*)</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">
+          <span class="btn-text">Create Account</span>
+          <span class="btn-loading" style="display: none;">Creating...</span>
+        </button>
+      </div>
+    </fieldset>
+  </form>
+  
+  <div class="form-footer">
+    <p>Already have an account? <a href="/account/login" class="link-secondary">Sign in here</a></p>
+  </div>
+</div>
 
-<p>Already have an account? <a href="/account/login">Login</a></p>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Password visibility toggle
+  const passwordInput = document.getElementById('accountPassword');
+  const toggleButton = document.querySelector('.password-toggle');
+  const showText = toggleButton.querySelector('.show-text');
+  const hideText = toggleButton.querySelector('.hide-text');
+  
+  toggleButton.addEventListener('click', function() {
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      showText.style.display = 'none';
+      hideText.style.display = 'inline';
+      toggleButton.setAttribute('aria-label', 'Hide password');
+    } else {
+      passwordInput.type = 'password';
+      showText.style.display = 'inline';
+      hideText.style.display = 'none';
+      toggleButton.setAttribute('aria-label', 'Show password');
+    }
+  });
+  
+  // Real-time password validation
+  passwordInput.addEventListener('input', function() {
+    const password = this.value;
+    const checks = {
+      'length-check': password.length >= 12,
+      'lowercase-check': /[a-z]/.test(password),
+      'uppercase-check': /[A-Z]/.test(password),
+      'number-check': /[0-9]/.test(password),
+      'symbol-check': /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)
+    };
+    
+    Object.keys(checks).forEach(checkId => {
+      const element = document.getElementById(checkId);
+      if (checks[checkId]) {
+        element.classList.add('valid');
+        element.classList.remove('invalid');
+      } else {
+        element.classList.add('invalid');
+        element.classList.remove('valid');
+      }
+    });
+  });
+  
+  // Form submission loading state
+  const form = document.getElementById('registrationForm');
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const btnText = submitBtn.querySelector('.btn-text');
+  const btnLoading = submitBtn.querySelector('.btn-loading');
+  
+  form.addEventListener('submit', function() {
+    submitBtn.disabled = true;
+    btnText.style.display = 'none';
+    btnLoading.style.display = 'inline';
+  });
+  
+  // Clear loading state if form has errors (page reload)
+  if (document.querySelector('.error-messages')) {
+    submitBtn.disabled = false;
+    btnText.style.display = 'inline';
+    btnLoading.style.display = 'none';
+  }
+});
+</script>
