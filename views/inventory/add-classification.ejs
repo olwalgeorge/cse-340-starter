@@ -8,9 +8,8 @@
   
   <%# Flash message handling %>
   <%- messages() %>
-  
-  <%# Display any validation errors %>
-  <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+    <%# Display any validation errors %>
+  <% if (typeof errors !== 'undefined' && errors && errors.length > 0) { %>
     <div class="error-messages">
       <ul>
         <% errors.forEach(error => { %>
