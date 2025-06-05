@@ -1,10 +1,4 @@
-<%- include('../partials/head') %>
-<%- include('../partials/header') %>
-<%- include('../partials/navigation') %>
-
-<main>
-  <h1><%= title %></h1>
-  <%- include('../partials/breadcrumbs') %>
+<h1><%= title %></h1>
   
   <%# Flash message handling %>
   <%- messages() %>
@@ -179,10 +173,8 @@
       
       <button type="submit" class="form-submit">
         <span>Add Vehicle</span>
-      </button>
-    </form>
+      </button>    </form>
   </div>
-</main>
 
 <script>
 // Client-side validation
@@ -262,9 +254,6 @@ document.getElementById('inv_make').addEventListener('input', function() {
 
 // Model validation
 document.getElementById('inv_model').addEventListener('input', function() {
-  const isValid = this.value.length >= 3;
-  addValidationClass(this, isValid || this.value.length === 0);
+  const isValid = this.value.length >= 3;  addValidationClass(this, isValid || this.value.length === 0);
 });
 </script>
-
-<%- include('../partials/footer') %>

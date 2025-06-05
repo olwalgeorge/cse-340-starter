@@ -1,9 +1,4 @@
-<%- include('../partials/head') %>
-<%- include('../partials/header') %>
-<%- include('../partials/navigation') %>
-
-<main id="main-content" class="page-content">
-  <h1 class="page-title"><%= title %></h1>
+<h1 class="page-title"><%= title %></h1>
   
   <% if (errors) { %>
     <div class="notice error-notice">
@@ -15,24 +10,20 @@
 
   <div class="dashboard-grid">
     <!-- Data Management Tools -->
-    <div class="dashboard-card">
-      <div class="card-header">
-        <i class="fas fa-database" aria-hidden="true"></i>
+    <div class="dashboard-card">      <div class="card-header">
+        <span class="icon" aria-hidden="true">🗄️</span>
         <h2>Data Management</h2>
       </div>
       <div class="card-content">
         <p class="card-description">Tools for managing your inventory data and maintaining data integrity.</p>
-        <div class="tool-buttons">
-          <button type="button" class="btn btn-secondary" onclick="validateData()">
-            <i class="fas fa-check-circle" aria-hidden="true"></i>
+        <div class="tool-buttons">          <button type="button" class="btn btn-secondary" onclick="validateData()">
+            <span class="icon" aria-hidden="true">✅</span>
             Validate Data Integrity
-          </button>
-          <button type="button" class="btn btn-secondary" onclick="cleanupData()">
-            <i class="fas fa-broom" aria-hidden="true"></i>
+          </button>          <button type="button" class="btn btn-secondary" onclick="cleanupData()">
+            <span class="icon" aria-hidden="true">🧹</span>
             Clean Up Orphaned Records
-          </button>
-          <button type="button" class="btn btn-secondary" onclick="optimizeDatabase()">
-            <i class="fas fa-tachometer-alt" aria-hidden="true"></i>
+          </button>          <button type="button" class="btn btn-secondary" onclick="optimizeDatabase()">
+            <span class="icon" aria-hidden="true">⚡</span>
             Optimize Database
           </button>
         </div>
@@ -40,24 +31,22 @@
     </div>
 
     <!-- Bulk Operations -->
-    <div class="dashboard-card">
-      <div class="card-header">
-        <i class="fas fa-tasks" aria-hidden="true"></i>
+    <div class="dashboard-card">      <div class="card-header">
+        <span class="icon" aria-hidden="true">📋</span>
         <h2>Bulk Operations</h2>
       </div>
       <div class="card-content">
         <p class="card-description">Perform operations on multiple inventory items at once.</p>
-        <div class="tool-buttons">
-          <button type="button" class="btn btn-secondary" onclick="bulkPriceUpdate()">
-            <i class="fas fa-dollar-sign" aria-hidden="true"></i>
+        <div class="tool-buttons">          <button type="button" class="btn btn-secondary" onclick="bulkPriceUpdate()">
+            <span class="icon" aria-hidden="true">💰</span>
             Bulk Price Update
           </button>
           <button type="button" class="btn btn-secondary" onclick="bulkStatusUpdate()">
-            <i class="fas fa-toggle-on" aria-hidden="true"></i>
+            <span class="icon" aria-hidden="true">🔄</span>
             Bulk Status Update
           </button>
           <button type="button" class="btn btn-warning" onclick="bulkDelete()">
-            <i class="fas fa-trash-alt" aria-hidden="true"></i>
+            <span class="icon" aria-hidden="true">🗑️</span>
             Bulk Delete (Caution)
           </button>
         </div>
@@ -65,50 +54,45 @@
     </div>
 
     <!-- Import/Export Tools -->
-    <div class="dashboard-card">
-      <div class="card-header">
-        <i class="fas fa-exchange-alt" aria-hidden="true"></i>
+    <div class="dashboard-card">      <div class="card-header">
+        <span class="icon" aria-hidden="true">⇄</span>
         <h2>Import/Export</h2>
       </div>
       <div class="card-content">
         <p class="card-description">Import and export inventory data in various formats.</p>
-        <div class="tool-buttons">
-          <label for="csv-import" class="btn btn-primary">
-            <i class="fas fa-upload" aria-hidden="true"></i>
+        <div class="tool-buttons">          <label for="csv-import" class="btn btn-primary">
+            <span class="icon" aria-hidden="true">📤</span>
             Import CSV
             <input type="file" id="csv-import" accept=".csv" style="display: none;" onchange="importCSV(this)">
           </label>
           <button type="button" class="btn btn-secondary" onclick="exportInventory()">
-            <i class="fas fa-download" aria-hidden="true"></i>
+            <span class="icon" aria-hidden="true">📥</span>
             Export All Data
           </button>
           <button type="button" class="btn btn-secondary" onclick="generateBackup()">
-            <i class="fas fa-save" aria-hidden="true"></i>
+            <span class="icon" aria-hidden="true">💾</span>
             Generate Backup
           </button>
         </div>
       </div>
     </div>
 
-    <!-- System Maintenance -->
-    <div class="dashboard-card">
+    <!-- System Maintenance -->    <div class="dashboard-card">
       <div class="card-header">
-        <i class="fas fa-cogs" aria-hidden="true"></i>
+        <span class="icon" aria-hidden="true">⚙️</span>
         <h2>System Maintenance</h2>
       </div>
       <div class="card-content">
         <p class="card-description">Tools for system maintenance and optimization.</p>
-        <div class="tool-buttons">
-          <button type="button" class="btn btn-secondary" onclick="clearCache()">
-            <i class="fas fa-eraser" aria-hidden="true"></i>
+        <div class="tool-buttons">          <button type="button" class="btn btn-secondary" onclick="clearCache()">
+            <span class="icon" aria-hidden="true">🧽</span>
             Clear Cache
           </button>
           <button type="button" class="btn btn-secondary" onclick="updateThumbnails()">
-            <i class="fas fa-images" aria-hidden="true"></i>
+            <span class="icon" aria-hidden="true">🖼️</span>
             Regenerate Thumbnails
-          </button>
-          <button type="button" class="btn btn-secondary" onclick="runHealthCheck()">
-            <i class="fas fa-heartbeat" aria-hidden="true"></i>
+          </button>          <button type="button" class="btn btn-secondary" onclick="runHealthCheck()">
+            <span class="icon" aria-hidden="true">💓</span>
             System Health Check
           </button>
         </div>
@@ -116,24 +100,22 @@
     </div>
 
     <!-- Backup & Recovery -->
-    <div class="dashboard-card">
-      <div class="card-header">
-        <i class="fas fa-shield-alt" aria-hidden="true"></i>
+    <div class="dashboard-card">      <div class="card-header">
+        <span class="icon" aria-hidden="true">🛡️</span>
         <h2>Backup & Recovery</h2>
       </div>
       <div class="card-content">
         <p class="card-description">Manage backups and data recovery options.</p>
-        <div class="tool-buttons">
-          <button type="button" class="btn btn-success" onclick="createBackup()">
-            <i class="fas fa-plus-circle" aria-hidden="true"></i>
+        <div class="tool-buttons">          <button type="button" class="btn btn-success" onclick="createBackup()">
+            <span class="icon" aria-hidden="true">➕</span>
             Create Backup
           </button>
           <button type="button" class="btn btn-secondary" onclick="viewBackups()">
-            <i class="fas fa-list" aria-hidden="true"></i>
+            <span class="icon" aria-hidden="true">📋</span>
             View Backups
           </button>
           <button type="button" class="btn btn-warning" onclick="restoreBackup()">
-            <i class="fas fa-undo" aria-hidden="true"></i>
+            <span class="icon" aria-hidden="true">↶</span>
             Restore from Backup
           </button>
         </div>
@@ -141,19 +123,17 @@
     </div>
 
     <!-- Navigation -->
-    <div class="dashboard-card">
-      <div class="card-header">
-        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    <div class="dashboard-card">      <div class="card-header">
+        <span class="icon" aria-hidden="true">←</span>
         <h2>Navigation</h2>
       </div>
       <div class="card-content">
-        <div class="tool-buttons">
-          <a href="/inv" class="btn btn-primary">
-            <i class="fas fa-tachometer-alt" aria-hidden="true"></i>
+        <div class="tool-buttons">          <a href="/inv" class="btn btn-primary">
+            <span class="icon" aria-hidden="true">📊</span>
             Back to Management Dashboard
           </a>
           <a href="/inv/report" class="btn btn-secondary">
-            <i class="fas fa-chart-bar" aria-hidden="true"></i>
+            <span class="icon" aria-hidden="true">📈</span>
             View Reports
           </a>
         </div>
@@ -173,10 +153,8 @@
         <div class="progress-bar">
           <div class="progress-fill" id="progress-fill"></div>
         </div>
-      </div>
-    </div>
+      </div>    </div>
   </div>
-</main>
 
 <script>
 // Modal functions
@@ -314,5 +292,3 @@ window.onclick = function(event) {
   }
 }
 </script>
-
-<%- include('../partials/footer') %>

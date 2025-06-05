@@ -67,6 +67,11 @@ app.get("/", utilities.handleErrors(async function(req, res){
   res.render("index", {title: "Home", nav})
 }))
 
+// Favicon route
+app.get("/favicon.ico", (req, res) => {
+  res.sendFile(__dirname + "/public/images/site/favicon-32x32.png")
+})
+
 /* ***********************
  * File Not Found Route - must be last route in list
  *************************/

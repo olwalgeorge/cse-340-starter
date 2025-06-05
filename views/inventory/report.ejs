@@ -1,9 +1,4 @@
-<%- include('../partials/head') %>
-<%- include('../partials/header') %>
-<%- include('../partials/navigation') %>
-
-<main id="main-content" class="page-content">
-  <h1 class="page-title"><%= title %></h1>
+<h1 class="page-title"><%= title %></h1>
   
   <% if (errors) { %>
     <div class="notice error-notice">
@@ -15,9 +10,8 @@
 
   <div class="dashboard-grid">
     <!-- Overall Statistics Card -->
-    <div class="dashboard-card">
-      <div class="card-header">
-        <i class="fas fa-chart-bar" aria-hidden="true"></i>
+    <div class="dashboard-card">      <div class="card-header">
+        <span class="icon" aria-hidden="true">📊</span>
         <h2>Overall Statistics</h2>
       </div>
       <div class="card-content">
@@ -51,9 +45,8 @@
     </div>
 
     <!-- Classification Breakdown Card -->
-    <div class="dashboard-card">
-      <div class="card-header">
-        <i class="fas fa-list-alt" aria-hidden="true"></i>
+    <div class="dashboard-card">      <div class="card-header">
+        <span class="icon" aria-hidden="true">📋</span>
         <h2>Classification Breakdown</h2>
       </div>
       <div class="card-content">
@@ -99,9 +92,8 @@
     </div>
 
     <!-- Recent Vehicles Card -->
-    <div class="dashboard-card">
-      <div class="card-header">
-        <i class="fas fa-clock" aria-hidden="true"></i>
+    <div class="dashboard-card">      <div class="card-header">
+        <span class="icon" aria-hidden="true">🕒</span>
         <h2>Recently Added Vehicles</h2>
       </div>
       <div class="card-content">
@@ -137,35 +129,29 @@
     </div>
 
     <!-- Report Actions Card -->
-    <div class="dashboard-card">
-      <div class="card-header">
-        <i class="fas fa-file-export" aria-hidden="true"></i>
+    <div class="dashboard-card">      <div class="card-header">
+        <span class="icon" aria-hidden="true">📤</span>
         <h2>Report Actions</h2>
       </div>
       <div class="card-content">
-        <div class="action-buttons">
-          <button type="button" class="btn btn-secondary" onclick="window.print()">
-            <i class="fas fa-print" aria-hidden="true"></i>
+        <div class="action-buttons">          <button type="button" class="btn btn-secondary" onclick="window.print()">
+            <span class="icon" aria-hidden="true">🖨️</span>
             Print Report
           </button>
           <button type="button" class="btn btn-secondary" onclick="exportToCSV()">
-            <i class="fas fa-download" aria-hidden="true"></i>
+            <span class="icon" aria-hidden="true">📥</span>
             Export to CSV
           </button>
           <a href="/inv" class="btn btn-primary">
-            <i class="fas fa-arrow-left" aria-hidden="true"></i>
+            <span class="icon" aria-hidden="true">←</span>
             Back to Management
           </a>
         </div>
-      </div>
-    </div>
+      </div>    </div>
   </div>
-</main>
 
 <script>
 function exportToCSV() {
   alert('CSV export functionality would be implemented here. This is a demo placeholder.');
 }
 </script>
-
-<%- include('../partials/footer') %>

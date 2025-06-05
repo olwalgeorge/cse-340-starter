@@ -2465,3 +2465,22 @@ textarea.form-input {
     box-shadow: 0 4px 12px rgba(41, 121, 255, 0.3);
   }
 }
+
+/* Icon spans styling to replace FontAwesome */
+.icon {
+  display: inline-block;
+  width: 1.5rem;
+  text-align: center;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.card-header .icon {
+  font-size: 1.5rem;
+  margin-right: 0.25rem;
+}
+
+.btn .icon {
+  font-size: 1rem;
+  margin-right: 0.25rem;
+}
