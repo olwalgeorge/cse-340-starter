@@ -7,6 +7,11 @@
         <span class="theme-toggle-icon light-icon">☀️</span>
         <span class="theme-toggle-icon dark-icon">🌙</span>
       </button>
-      <a title="Click to log in" href="/account/login">My Account</a>
+      <% if (locals.loggedin) { %>
+        <a title="Click to go to account management" href="/account/">Welcome <%= locals.accountData.account_firstname %></a>
+        <a title="Click to log out" href="/account/logout">Logout</a>
+      <% } else { %>
+        <a title="Click to log in" href="/account/login">My Account</a>
+      <% } %>
     </div>
   </header>
