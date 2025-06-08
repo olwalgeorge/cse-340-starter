@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 5 - Manual Testing Guide</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2rem; line-height: 1.6; }
+        .test-section { margin-bottom: 2rem; padding: 1rem; border: 1px solid #ccc; border-radius: 8px; }
+        .test-step { margin: 0.5rem 0; padding: 0.5rem; background: #f9f9f9; border-radius: 4px; }
+        .completed { background: #d4edda; border-color: #c3e6cb; }
+        .failed { background: #f8d7da; border-color: #f5c6cb; }
+        h2 { color: #333; border-bottom: 2px solid #0066cc; padding-bottom: 0.5rem; }
+        code { background: #f4f4f4; padding: 0.2rem 0.4rem; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>Assignment 5 - Manual Testing Guide</h1>
+    <p><strong>Application URL:</strong> <a href="http://localhost:5500" target="_blank">http://localhost:5500</a></p>
+    
+    <div class="test-section">
+        <h2>Task 1: Header Partial Tests</h2>
+        <div class="test-step">
+            <strong>Test 1.1:</strong> Visit the homepage when NOT logged in<br>
+            <strong>Expected:</strong> Header should show "My Account" link only<br>
+            <strong>Check:</strong> No "Welcome" or "Logout" links should be present in the HTML source
+        </div>
+        <div class="test-step">
+            <strong>Test 1.2:</strong> Login with valid credentials<br>
+            <strong>Expected:</strong> Header should change to show "Welcome [FirstName]" and "Logout" links<br>
+            <strong>Check:</strong> "My Account" link should not be present in HTML source
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Task 2: Middleware Protection Tests</h2>
+        <div class="test-step">
+            <strong>Test 2.1:</strong> Try accessing <code>/inv/</code> without login<br>
+            <strong>Expected:</strong> Should redirect to login page with message
+        </div>
+        <div class="test-step">
+            <strong>Test 2.2:</strong> Login as Client and try accessing <code>/inv/</code><br>
+            <strong>Expected:</strong> Should redirect to login page with permissions message
+        </div>
+        <div class="test-step">
+            <strong>Test 2.3:</strong> Login as Employee/Admin and access <code>/inv/</code><br>
+            <strong>Expected:</strong> Should successfully access inventory management
+        </div>
+        <div class="test-step">
+            <strong>Test 2.4:</strong> Access <code>/inv/type/1</code> and <code>/inv/detail/1</code> without login<br>
+            <strong>Expected:</strong> Should work fine (no protection on these routes)
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Task 3: Account Management View Tests</h2>
+        <div class="test-step">
+            <strong>Test 3.1:</strong> Login as Client and visit <code>/account/</code><br>
+            <strong>Expected:</strong> Should see "Welcome [FirstName]" and "Update Account Information" link<br>
+            <strong>Check:</strong> Should NOT see "Inventory Management" section in HTML source
+        </div>
+        <div class="test-step">
+            <strong>Test 3.2:</strong> Login as Employee/Admin and visit <code>/account/</code><br>
+            <strong>Expected:</strong> Should see "Welcome [FirstName]", "Update Account Information", and "Inventory Management" with link
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Task 4: Account Update Forms Tests</h2>
+        <div class="test-step">
+            <strong>Test 4.1:</strong> Click "Update Account Information" link<br>
+            <strong>Expected:</strong> Should navigate to update page with two separate forms
+        </div>
+        <div class="test-step">
+            <strong>Test 4.2:</strong> Check Account Update form<br>
+            <strong>Expected:</strong> Should have pre-filled first name, last name, email with labels and required attributes
+        </div>
+        <div class="test-step">
+            <strong>Test 4.3:</strong> Check Change Password form<br>
+            <strong>Expected:</strong> Should have password field with requirements displayed and pattern validation
+        </div>
+        <div class="test-step">
+            <strong>Test 4.4:</strong> Check for hidden account_id fields<br>
+            <strong>Expected:</strong> Both forms should have hidden input with current user's account_id
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Task 5: Update Processing Tests</h2>
+        <div class="test-step">
+            <strong>Test 5.1:</strong> Submit account update with valid data<br>
+            <strong>Expected:</strong> Should update successfully, show message, redirect to account management
+        </div>
+        <div class="test-step">
+            <strong>Test 5.2:</strong> Submit account update with invalid email<br>
+            <strong>Expected:</strong> Should return to form with error messages and sticky data
+        </div>
+        <div class="test-step">
+            <strong>Test 5.3:</strong> Submit password change with valid password<br>
+            <strong>Expected:</strong> Should update successfully and redirect with success message
+        </div>
+        <div class="test-step">
+            <strong>Test 5.4:</strong> Submit password change with invalid password<br>
+            <strong>Expected:</strong> Should return to form with validation error
+        </div>
+        <div class="test-step">
+            <strong>Test 5.5:</strong> Check database after updates<br>
+            <strong>Expected:</strong> Password should be hashed, account info should be updated
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Task 6: Logout Process Tests</h2>
+        <div class="test-step">
+            <strong>Test 6.1:</strong> Click "Logout" link<br>
+            <strong>Expected:</strong> Should redirect to homepage with logout message
+        </div>
+        <div class="test-step">
+            <strong>Test 6.2:</strong> Check header after logout<br>
+            <strong>Expected:</strong> Should show "My Account" link again
+        </div>
+        <div class="test-step">
+            <strong>Test 6.3:</strong> Check browser cookies<br>
+            <strong>Expected:</strong> JWT cookie should be deleted/cleared
+        </div>
+        <div class="test-step">
+            <strong>Test 6.4:</strong> Try accessing <code>/account/</code> after logout<br>
+            <strong>Expected:</strong> Should redirect to login page
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Additional Tests</h2>
+        <div class="test-step">
+            <strong>JWT Token Test:</strong> Login and check browser cookies<br>
+            <strong>Expected:</strong> Should see "jwt" cookie with encrypted token
+        </div>
+        <div class="test-step">
+            <strong>Security Test:</strong> Try to access another user's update page<br>
+            <strong>Expected:</strong> Should only allow access to own account
+        </div>
+        <div class="test-step">
+            <strong>Email Uniqueness Test:</strong> Try to update email to existing email<br>
+            <strong>Expected:</strong> Should show error about email already existing
+        </div>
+    </div>
+
+    <script>
+        // Add click handlers to test steps for marking completion
+        document.querySelectorAll('.test-step').forEach(step => {
+            step.addEventListener('click', function() {
+                if (this.classList.contains('completed')) {
+                    this.classList.remove('completed');
+                    this.classList.add('failed');
+                } else if (this.classList.contains('failed')) {
+                    this.classList.remove('failed');
+                } else {
+                    this.classList.add('completed');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
