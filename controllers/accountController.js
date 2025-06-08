@@ -84,8 +84,7 @@ async function accountLogin(req, res) {
   let nav = await utilities.getNav()
   const { account_email, account_password } = req.body
   const accountData = await accountModel.getAccountByEmail(account_email)
-  if (!accountData) {
-    req.flash("notice", "Please check your credentials and try again.")
+  if (!accountData) {    req.flash("notice", "Please check your credentials and try again.")
     res.status(400).render("account/login", {
       title: "Login",
       nav,
@@ -93,7 +92,8 @@ async function accountLogin(req, res) {
       account_email,
     })
     return
-  }  try {
+  }
+  try {
     if (await bcrypt.compare(account_password, accountData.account_password)) {
       delete accountData.account_password
       const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })

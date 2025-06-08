@@ -1,0 +1,55 @@
+/* Account Update Forms Styling */
+.account-forms {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.account-forms fieldset {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  background: #f9f9f9;
+}
+
+.account-forms legend {
+  font-weight: bold;
+  font-size: 1.25rem;
+  padding: 0 1rem;
+}
+
+.account-forms label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.account-forms input[type="text"],
+.account-forms input[type="email"],
+.account-forms input[type="password"] {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.account-forms input[type="submit"] {
+  background: #0066cc;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.password-requirements {
+  background: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
