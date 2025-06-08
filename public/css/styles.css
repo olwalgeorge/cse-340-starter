@@ -518,16 +518,6 @@ main {
   color: var(--breadcrumb-active);
 }
 
-/* Current Page Indicator */
-.current-page-indicator {
-  display: block;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-  font-style: italic;
-  color: var(--breadcrumb-text);
-  border-left: 4px solid var(--breadcrumb-active);
-}
-
 /******* Footer Styles ***************/
 footer {
   background-color: var(--footer-bg);
@@ -2238,10 +2228,7 @@ textarea.form-input {
     margin-top: 4rem;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   }
-  
-  .welcome-card {
+    .welcome-card {
     margin-bottom: 4rem;
   }
 }
-
-@media screen and
