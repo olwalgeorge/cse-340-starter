@@ -1283,13 +1283,13 @@ a:focus, button:focus {
 
 /* Form Group Styling */
 .form-group {
-  margin-bottom: 1.75rem;
+  margin-bottom: 2rem;
   position: relative;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
   color: var(--text-color);
   font-weight: 600;
   font-size: 0.9rem;
@@ -1442,12 +1442,6 @@ textarea.form-input {
   background: rgba(102, 126, 234, 0.1);
 }
 
-.password-toggle:focus {
-  outline: 2px solid #667eea;
-  outline-offset: 2px;
-  opacity: 1;
-}
-
 /* Modern Submit Button */
 .form-container button[type="submit"],
 .form-container input[type="submit"] {
@@ -1465,7 +1459,7 @@ textarea.form-input {
   overflow: hidden;
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 .form-container button[type="submit"]:hover,
@@ -1519,8 +1513,8 @@ textarea.form-input {
 
 /* Password Requirements */
 .password-requirements {
-  margin-top: 0.75rem;
-  padding: 1rem;
+  margin-top: 1rem;
+  padding: 2rem;
   background-color: var(--review-bg);
   border: 1px solid var(--review-border);
   border-radius: 8px;
@@ -1528,7 +1522,7 @@ textarea.form-input {
 }
 
 .password-requirements h4 {
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 1rem 0;
   color: var(--text-color);
   font-size: 0.9rem;
 }
@@ -1537,7 +1531,7 @@ textarea.form-input {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
   color: var(--text-color);
   opacity: 0.7;
   transition: all 0.3s ease;
@@ -1615,8 +1609,8 @@ textarea.form-input {
 /* Form Links */
 .form-links {
   text-align: center;
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
   border-top: 1px solid var(--hero-border);
 }
 
@@ -1634,7 +1628,7 @@ textarea.form-input {
 
 /* Flash Messages for Forms */
 .flash-messages {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .flash-message {
@@ -1644,7 +1638,7 @@ textarea.form-input {
   font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .flash-message.notice {
@@ -1695,7 +1689,7 @@ textarea.form-input {
 
 .dashboard-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   position: relative;
 }
 
@@ -1746,6 +1740,7 @@ textarea.form-input {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   margin-bottom: 2rem;
+  margin-top: 2rem;
 }
 
 .dashboard-card {
@@ -1791,16 +1786,104 @@ textarea.form-input {
 .dashboard-card p {
   color: var(--text-color);
   opacity: 0.8;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .dashboard-actions {
   display: flex;
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
+}
+
+/* Card Component Styles */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--hero-border);
+}
+
+.card-header h3 {
+  margin: 0;
+  color: var(--heading-color);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.card-header .icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.card-content {
+  margin-bottom: 2rem;
+}
+
+.card-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--hero-border);
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Info Box Styles */
+.info-box {
+  background-color: var(--hero-bg);
+  border: 1px solid var(--hero-border);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.info-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: var(--heading-color);
+}
+
+.info-header .icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.requirements-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.requirements-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+  font-size: 0.9rem;
+}
+
+.requirements-list li:before {
+  content: "✓";
+  color: var(--link-color);
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-top: 0.1rem;
+  flex-shrink: 0;
+}
+
+.requirements-list li:last-child {
+  margin-bottom: 0;
 }
 
 /* Enhanced Button Styling for Uniformity */
@@ -2068,7 +2151,7 @@ textarea.form-input {
 .social-text {
   font-size: 0.95rem;
   color: var(--text-color);
-  margin-bottom: 1.25rem;
+  margin-bottom: 2rem;
   opacity: 0.8;
   font-weight: 500;
 }
@@ -2076,14 +2159,14 @@ textarea.form-input {
 .social-buttons {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 /* Form Divider */
 .form-divider {
   position: relative;
   text-align: center;
-  margin: 2rem 0 1.5rem 0;
+  margin: 2rem 0;
 }
 
 .form-divider::before {
@@ -2105,51 +2188,60 @@ textarea.form-input {
   font-weight: 500;
 }
 
-/* Dark Mode Adjustments for Social Buttons */
-@media (prefers-color-scheme: dark) {
-  .btn-google {
-    background: linear-gradient(135deg, #2d2d2d 0%, #3a3a3a 100%);
-    color: #e8eaed;
-    border-color: rgba(255, 255, 255, 0.12);
-  }
-
-  .btn-google:hover {
-    background: linear-gradient(135deg, #3a3a3a 0%, #454545 100%);
-    color: #ffffff;
-    border-color: rgba(66, 133, 244, 0.4);
-  }
-
-  .form-divider span {
-    background: var(--body-bg);
-  }
+/* Welcome Card Specific Styling */
+.welcome-card {
+  margin-bottom: 3rem;
+  background: linear-gradient(135deg, var(--hero-bg) 0%, var(--body-bg) 100%);
+  border: 2px solid var(--hero-border);
 }
 
-/* Responsive Social Buttons */
+.welcome-card .card-header h2 {
+  color: var(--heading-color);
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.welcome-card .card-content p {
+  margin-bottom: 1rem;
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.welcome-card .card-content p:last-child {
+  margin-bottom: 0;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+
+/* Dashboard Responsive Improvements */
 @media screen and (min-width: 768px) {
-  .social-buttons {
-    gap: 0.875rem;
+  .dashboard-grid {
+    gap: 2.5rem;
+    margin-top: 3rem;
   }
   
-  .btn-social {
-    padding: 1rem 1.5rem;
-    font-size: 1rem;
-  }
-  
-  .social-icon {
-    width: 28px;
-    height: 28px;
-  }
-  
-  .social-icon svg {
-    width: 24px;
-    height: 24px;
+  .welcome-card {
+    margin-bottom: 3.5rem;
   }
 }
 
-/* Large screens - wider social buttons */
 @media screen and (min-width: 1024px) {
-  .social-buttons {
-    max-width: 400px;
-    margin: 0 auto;
+  .dashboard-grid {
+    gap: 3rem;
+    margin-top: 4rem;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  }
+  
+  .welcome-card {
+    margin-bottom: 4rem;
   }
 }
+
+@media screen and

@@ -22,11 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
       "longitude": "34.7617"
     },
     "telephone": "+254-700-000000",
-    "priceRange": "$$$",
-    "openingHours": "Mo,Tu,We,Th,Fr 09:00-17:00",
-    "sameAs": [
-      "https://www.facebook.com/csemotors",
-      "https://twitter.com/csemotors"
+    "priceRange": "$$$",    "openingHours": "Mo,Tu,We,Th,Fr 09:00-17:00",    "sameAs": [
+      "https://www.facebook.com/profile.php?id=61558266666113",
+      "https://www.linkedin.com/in/george-olwal-590788236/",
+      "https://github.com/olwalgeorge/cse-340-starter"
     ]
   });
   
