@@ -1,0 +1,115 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } else { %>
+  <h1>Edit Vehicle</h1>
+<% } %>
+
+<%- messages() %>
+
+<% if (errors) { %>
+  <ul class="notice">
+    <% errors.forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }); %>
+  </ul>
+<% } %>
+
+<form class="account-form" action="/inv/update/" method="post">
+  <div class="form-group">
+    <label for="classification_id">Classification</label>
+    <select name="classification_id" id="classification_id" required>
+      <%- classificationList %>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="inv_make">Make *</label>
+    <input type="text" id="inv_make" name="inv_make" value="<%= locals.inv_make %>" required>
+  </div>
+
+  <div class="form-group">
+    <label for="inv_model">Model *</label>
+    <input type="text" id="inv_model" name="inv_model" value="<%= locals.inv_model %>" required>
+  </div>
+
+  <div class="form-group">
+    <label for="inv_year">Year *</label>
+    <input type="text" id="inv_year" name="inv_year" value="<%= locals.inv_year %>" required>
+  </div>
+
+  <div class="form-group">
+    <label for="inv_description">Description *</label>
+    <textarea id="inv_description" name="inv_description" rows="4" required><%= locals.inv_description %></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="inv_image">Image Path *</label>
+    <input type="text" id="inv_image" name="inv_image" value="<%= locals.inv_image %>" required>
+  </div>
+
+  <div class="form-group">
+    <label for="inv_thumbnail">Thumbnail Path *</label>
+    <input type="text" id="inv_thumbnail" name="inv_thumbnail" value="<%= locals.inv_thumbnail %>" required>
+  </div>
+
+  <div class="form-group">
+    <label for="inv_price">Price *</label>
+    <input type="text" id="inv_price" name="inv_price" value="<%= locals.inv_price %>" required>
+  </div>
+
+  <div class="form-group">
+    <label for="inv_miles">Miles *</label>
+    <input type="text" id="inv_miles" name="inv_miles" value="<%= locals.inv_miles %>" required>
+  </div>
+
+  <div class="form-group">
+    <label for="inv_color">Color *</label>
+    <input type="text" id="inv_color" name="inv_color" value="<%= locals.inv_color %>" required>
+  </div>
+
+  <input type="hidden" name="inv_id" value="<%= locals.inv_id %>">
+
+  <div class="form-group">
+    <input type="submit" value="Update Vehicle" class="btn btn-primary">
+  </div>
+</form>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const form = document.querySelector(".account-form");
+  const submitButton = form.querySelector('input[type="submit"]');
+  const inputs = form.querySelectorAll('input, select, textarea');
+  
+  // Store original values
+  const originalValues = {};
+  inputs.forEach(input => {
+    if (input.type !== 'submit' && input.type !== 'hidden') {
+      originalValues[input.name] = input.value;
+    }
+  });
+  
+  // Check if form has changed
+  function checkFormChanges() {
+    let hasChanges = false;
+    inputs.forEach(input => {
+      if (input.type !== 'submit' && input.type !== 'hidden') {
+        if (input.value !== originalValues[input.name]) {
+          hasChanges = true;
+        }
+      }
+    });
+    submitButton.disabled = !hasChanges;
+  }
+  
+  // Initially disable submit button
+  submitButton.disabled = true;
+  
+  // Add event listeners
+  inputs.forEach(input => {
+    if (input.type !== 'submit' && input.type !== 'hidden') {
+      input.addEventListener('input', checkFormChanges);
+      input.addEventListener('change', checkFormChanges);
+    }
+  });
+});
+</script>

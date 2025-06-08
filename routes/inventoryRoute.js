@@ -45,4 +45,24 @@ router.get("/report", utilities.checkAccountType, utilities.handleErrors(invCont
 // Route to build management tools view
 router.get("/tools", utilities.checkAccountType, utilities.handleErrors(invController.buildManagementTools));
 
+// Route to get JSON data for inventory by classification_id for management
+router.get("/getInventory/:classification_id", utilities.checkAccountType, utilities.handleErrors(invController.getInventoryJSON));
+
+// Route to build edit inventory view
+router.get("/edit/:inv_id", utilities.checkAccountType, utilities.handleErrors(invController.buildEditInventory));
+
+// Route to update inventory item
+router.post("/update/", 
+  utilities.checkAccountType,
+  invValidate.inventoryRules(),
+  invValidate.checkUpdateData,
+  utilities.handleErrors(invController.updateInventory)
+);
+
+// Route to build delete confirmation view
+router.get("/delete/:inv_id", utilities.checkAccountType, utilities.handleErrors(invController.buildDeleteConfirmation));
+
+// Route to process delete action
+router.post("/delete/", utilities.checkAccountType, utilities.handleErrors(invController.deleteInventoryItem));
+
 module.exports = router;

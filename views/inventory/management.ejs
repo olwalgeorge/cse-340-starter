@@ -24,6 +24,16 @@
           <a href="/inv/add-inventory" class="btn-secondary">Add New Vehicle</a>
         </div>
       </div>
+
+      <div class="dashboard-card">
+        <h3>✏️ Modify Inventory</h3>
+        <p>Choose a classification to see inventory items available for modification (edit/delete).</p>
+        <div class="dashboard-actions">
+          <label for="classificationList">Choose a classification:</label>
+          <%- classificationList %>
+          <table id="inventoryDisplay"></table>
+        </div>
+      </div>
       
       <div class="dashboard-card">
         <h3>📊 Inventory Overview</h3>
@@ -39,5 +49,95 @@
         <div class="dashboard-actions">
           <a href="/inv/tools" class="btn-secondary">Access Tools</a>
         </div>
-      </div>    </div>
+      </div>    
+    </div>
   </div>
+
+<script>
+'use strict'
+
+// Get a list of items in inventory based on the classification_id 
+let classificationList = document.querySelector("#classificationList")
+classificationList.addEventListener("change", function () { 
+ let classification_id = classificationList.value 
+ console.log(`classification_id is: ${classification_id}`) 
+ let classIdURL = "/inv/getInventory/"+classification_id 
+ fetch(classIdURL) 
+ .then(function (response) { 
+  if (response.ok) { 
+   return response.json(); 
+  } 
+  throw Error("Network response was not OK"); 
+ }) 
+ .then(function (data) { 
+  console.log(data); 
+  buildInventoryList(data); 
+ }) 
+ .catch(function (error) { 
+  console.log('There was a problem: ', error.message) 
+ }) 
+})
+
+// Build inventory items into HTML table components and inject into DOM 
+function buildInventoryList(data) { 
+ let inventoryDisplay = document.getElementById("inventoryDisplay"); 
+ // Set up the table labels 
+ let dataTable = '<thead>'; 
+ dataTable += '<tr><th>Vehicle Name</th><td>&nbsp;</td><td>&nbsp;</td></tr>'; 
+ dataTable += '</thead>'; 
+ // Set up the table body 
+ dataTable += '<tbody>'; 
+ // Iterate over all vehicles in the array and put each in a row 
+ data.forEach(function (element) { 
+  console.log(element.inv_id + ", " + element.inv_model); 
+  dataTable += `<tr><td>${element.inv_make} ${element.inv_model}</td>`; 
+  dataTable += `<td><a href='/inv/edit/${element.inv_id}' title='Click to edit'>Edit</a></td>`; 
+  dataTable += `<td><a href='/inv/delete/${element.inv_id}' title='Click to delete'>Delete</a></td></tr>`; 
+ }) 
+ dataTable += '</tbody>'; 
+ // Display the contents in the Inventory Management view 
+ inventoryDisplay.innerHTML = dataTable; 
+}
+</script>
+
+<style>
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+#inventoryDisplay th,
+#inventoryDisplay td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#inventoryDisplay th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+#inventoryDisplay tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+#inventoryDisplay a {
+  color: #007bff;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+#inventoryDisplay a:hover {
+  text-decoration: underline;
+}
+
+#classificationList {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+</style>
