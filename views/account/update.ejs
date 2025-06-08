@@ -1,57 +1,115 @@
 <% if (title) { %>
-  <h1><%= title %></h1>
+  <div class="dashboard-header">
+    <h1 class="dashboard-title"><%= title %></h1>
+    <p class="dashboard-subtitle">Update your account information and security settings</p>
+  </div>
 <% } else {res.redirect('/')} %>
 
 <%- messages() %>
 
 <% if (errors) { %>
-  <ul class="notice">
-    <% errors.array().forEach(error => { %>
-      <li><%= error.msg %></li>
-    <% }) %>
-  </ul>
+  <div class="dashboard-card error-card">
+    <div class="card-header">
+      <span class="icon">⚠️</span>
+      <h3>Please Fix the Following Errors</h3>
+    </div>
+    <div class="card-content">
+      <ul class="notice">
+        <% errors.array().forEach(error => { %>
+          <li><%= error.msg %></li>
+        <% }) %>
+      </ul>
+    </div>
+  </div>
 <% } %>
 
-<div class="account-forms">
+<div class="dashboard-grid">
   <!-- Account Update Form -->
-  <form action="/account/update" method="post">
-    <fieldset>
-      <legend>Update Account Information</legend>
-      
-      <label for="account_firstname">First Name:</label>
-      <input type="text" id="account_firstname" name="account_firstname" 
-             value="<%= locals.account_firstname || (locals.accountData ? locals.accountData.account_firstname : '') %>" required>
-      
-      <label for="account_lastname">Last Name:</label>
-      <input type="text" id="account_lastname" name="account_lastname" 
-             value="<%= locals.account_lastname || (locals.accountData ? locals.accountData.account_lastname : '') %>" required>
-      
-      <label for="account_email">Email:</label>
-      <input type="email" id="account_email" name="account_email" 
-             value="<%= locals.account_email || (locals.accountData ? locals.accountData.account_email : '') %>" required>
-      
-      <input type="hidden" name="account_id" value="<%= locals.accountData ? locals.accountData.account_id : '' %>">
-      
-      <input type="submit" value="Update Account">
-    </fieldset>
-  </form>
+  <div class="dashboard-card">
+    <div class="card-header">
+      <span class="icon">👤</span>
+      <h3>Personal Information</h3>
+    </div>
+    <div class="card-content">
+      <form action="/account/update" method="post" class="form-modern">
+        <div class="form-group">
+          <label for="account_firstname" class="form-label">First Name</label>
+          <input type="text" id="account_firstname" name="account_firstname" 
+                 class="form-input"
+                 value="<%= locals.account_firstname || (locals.accountData ? locals.accountData.account_firstname : '') %>" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="account_lastname" class="form-label">Last Name</label>
+          <input type="text" id="account_lastname" name="account_lastname" 
+                 class="form-input"
+                 value="<%= locals.account_lastname || (locals.accountData ? locals.accountData.account_lastname : '') %>" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="account_email" class="form-label">Email Address</label>
+          <input type="email" id="account_email" name="account_email" 
+                 class="form-input"
+                 value="<%= locals.account_email || (locals.accountData ? locals.accountData.account_email : '') %>" required>
+        </div>
+        
+        <input type="hidden" name="account_id" value="<%= locals.accountData ? locals.accountData.account_id : '' %>">
+        
+        <div class="card-actions">
+          <button type="submit" class="btn btn-primary">
+            <span class="icon">💾</span>
+            Update Account
+          </button>
+          <a href="/account/" class="btn btn-secondary">
+            <span class="icon">↩️</span>
+            Cancel
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- Change Password Form -->
-  <form action="/account/change-password" method="post">
-    <fieldset>
-      <legend>Change Password</legend>
-      
-      <div class="password-requirements">
-        <strong>Password Requirements:</strong> Password must be at least 12 characters and contain at least 1 capital letter, 1 number and 1 special character.
+  <div class="dashboard-card">
+    <div class="card-header">
+      <span class="icon">🔐</span>
+      <h3>Security Settings</h3>
+    </div>
+    <div class="card-content">
+      <div class="info-box">
+        <div class="info-header">
+          <span class="icon">ℹ️</span>
+          <strong>Password Requirements</strong>
+        </div>
+        <ul class="requirements-list">
+          <li>At least 12 characters long</li>
+          <li>Contains at least 1 capital letter</li>
+          <li>Contains at least 1 number</li>
+          <li>Contains at least 1 special character (@$!%*?&)</li>
+        </ul>
       </div>
       
-      <label for="account_password">New Password:</label>
-      <input type="password" id="account_password" name="account_password" 
-             pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$" required>
-      
-      <input type="hidden" name="account_id" value="<%= locals.accountData ? locals.accountData.account_id : '' %>">
-      
-      <input type="submit" value="Change Password">
-    </fieldset>
-  </form>
+      <form action="/account/change-password" method="post" class="form-modern">
+        <div class="form-group">
+          <label for="account_password" class="form-label">New Password</label>
+          <input type="password" id="account_password" name="account_password" 
+                 class="form-input"
+                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$" required>
+        </div>
+
+        <input type="hidden" name="account_id" value="<%= locals.accountData ? locals.accountData.account_id : '' %>">
+        
+        <div class="card-actions">
+          <button type="submit" class="btn btn-primary">
+            <span class="icon">🔄</span>
+            Change Password
+          </button>
+          <a href="/account/" class="btn btn-secondary">
+            <span class="icon">↩️</span>
+            Cancel
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

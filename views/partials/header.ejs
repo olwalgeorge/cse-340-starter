@@ -1,17 +1,27 @@
 <header id="top-header">
     <span class="siteName">
       <a href="/" title="Return to home page">CSE Motors</a>
-    </span>
-    <div id="tools">
+    </span>    <div id="tools">
       <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
         <span class="theme-toggle-icon light-icon">☀️</span>
         <span class="theme-toggle-icon dark-icon">🌙</span>
       </button>
       <% if (locals.loggedin) { %>
-        <a title="Click to go to account management" href="/account/">Welcome <%= locals.accountData.account_firstname %></a>
-        <a title="Click to log out" href="/account/logout">Logout</a>
+        <div class="user-menu">
+          <a title="Click to go to account management" href="/account/" class="user-link">
+            <span class="icon">👤</span>
+            Welcome <%= locals.accountData.account_firstname %>
+          </a>
+          <a title="Click to log out" href="/account/logout" class="logout-link">
+            <span class="icon">🚪</span>
+            Logout
+          </a>
+        </div>
       <% } else { %>
-        <a title="Click to log in" href="/account/login">My Account</a>
+        <a title="Click to log in" href="/account/login" class="login-link">
+          <span class="icon">🔑</span>
+          My Account
+        </a>
       <% } %>
     </div>
   </header>

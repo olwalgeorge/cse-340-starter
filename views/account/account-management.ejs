@@ -1,22 +1,97 @@
 <% if (title) { %>
-  <h1><%= title %></h1>
+  <div class="dashboard-header">
+    <h1 class="dashboard-title"><%= title %></h1>
+    <p class="dashboard-subtitle">Manage your account settings and preferences</p>
+  </div>
 <% } else {res.redirect('/')} %>
 
 <%- messages() %>
 
 <% if (locals.loggedin) { %>
-  <h2>Welcome <%= locals.accountData.account_firstname %></h2>
-  
-  <div class="account-links">
-    <p><a href="/account/update/<%= locals.accountData.account_id %>">Update Account Information</a></p>
-  </div>
-  
-  <% if (locals.accountData.account_type == "Employee" || locals.accountData.account_type == "Admin") { %>
-    <h3>Inventory Management</h3>
-    <div class="account-links">
-      <p><a href="/inv">Access Inventory Management</a></p>
+  <!-- Welcome Section -->
+  <div class="dashboard-card welcome-card">
+    <div class="card-header">
+      <span class="icon">👤</span>
+      <h2>Welcome Back, <%= locals.accountData.account_firstname %>!</h2>
     </div>
-  <% } %>
+    <div class="card-content">
+      <p>Account Type: <strong><%= locals.accountData.account_type %></strong></p>
+      <p>Email: <strong><%= locals.accountData.account_email %></strong></p>
+      <p>Member since: <strong><%= new Date(locals.accountData.created_at || Date.now()).toLocaleDateString() %></strong></p>
+    </div>
+  </div>
+
+  <!-- Account Management Section -->
+  <div class="dashboard-grid">
+    <div class="dashboard-card">
+      <div class="card-header">
+        <span class="icon">⚙️</span>
+        <h3>Account Settings</h3>
+      </div>
+      <div class="card-content">
+        <p>Update your personal information, change your password, and manage your account preferences.</p>
+        <div class="card-actions">
+          <a href="/account/update/<%= locals.accountData.account_id %>" class="btn btn-primary">
+            <span class="icon">✏️</span>
+            Update Account Information
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <% if (locals.accountData.account_type == "Employee" || locals.accountData.account_type == "Admin") { %>
+    <div class="dashboard-card">
+      <div class="card-header">
+        <span class="icon">📦</span>
+        <h3>Inventory Management</h3>
+      </div>
+      <div class="card-content">
+        <p>Access the inventory management system to manage vehicles, classifications, and dealer tools.</p>
+        <div class="card-actions">
+          <a href="/inv" class="btn btn-primary">
+            <span class="icon">🚗</span>
+            Access Inventory Management
+          </a>
+        </div>
+      </div>
+    </div>
+    <% } %>
+
+    <!-- Quick Actions Card -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <span class="icon">⚡</span>
+        <h3>Quick Actions</h3>
+      </div>
+      <div class="card-content">
+        <p>Frequently used account actions and shortcuts.</p>
+        <div class="card-actions">
+          <a href="/account/logout" class="btn btn-secondary">
+            <span class="icon">🚪</span>
+            Logout
+          </a>
+          <a href="/" class="btn btn-secondary">
+            <span class="icon">🏠</span>
+            Home
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 <% } else { %>
-  <p>You must be logged in to view this page.</p>
+  <div class="dashboard-card error-card">
+    <div class="card-header">
+      <span class="icon">🔒</span>
+      <h2>Access Denied</h2>
+    </div>
+    <div class="card-content">
+      <p>You must be logged in to view this page.</p>
+      <div class="card-actions">
+        <a href="/account/login" class="btn btn-primary">
+          <span class="icon">🔑</span>
+          Login to Your Account
+        </a>
+      </div>
+    </div>
+  </div>
 <% } %>
