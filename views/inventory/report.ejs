@@ -8,146 +8,158 @@
     </div>
   <% } %>
 
-  <div class="dashboard-grid">
-    <!-- Overall Statistics Card -->
-    <div class="dashboard-card">      <div class="card-header">
-        <span class="icon" aria-hidden="true">📊</span>
-        <h2>Overall Statistics</h2>
-      </div>
-      <div class="card-content">
-        <% if (stats) { %>
-          <div class="stats-grid">
-            <div class="stat-item">
-              <span class="stat-label">Total Vehicles:</span>
-              <span class="stat-value"><%= stats.total_vehicles %></span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">Classifications:</span>
-              <span class="stat-value"><%= stats.total_classifications %></span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">Average Price:</span>
-              <span class="stat-value">$<%= Number(stats.average_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">Total Value:</span>
-              <span class="stat-value">$<%= Number(stats.total_value).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-label">Price Range:</span>
-              <span class="stat-value">$<%= Number(stats.min_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %> - $<%= Number(stats.max_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></span>
-            </div>
-          </div>
-        <% } else { %>
-          <p class="notice">No statistics available at this time.</p>
-        <% } %>
-      </div>
-    </div>
-
-    <!-- Classification Breakdown Card -->
-    <div class="dashboard-card">      <div class="card-header">
-        <span class="icon" aria-hidden="true">📋</span>
-        <h2>Classification Breakdown</h2>
-      </div>
-      <div class="card-content">
-        <% if (classificationStats && classificationStats.length > 0) { %>
-          <div class="table-container">
-            <table class="report-table">
-              <thead>
-                <tr>
-                  <th>Classification</th>
-                  <th>Vehicle Count</th>
-                  <th>Avg Price</th>
-                  <th>Price Range</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% classificationStats.forEach(stat => { %>
-                  <tr>
-                    <td><%= stat.classification_name %></td>
-                    <td><%= stat.vehicle_count %></td>
-                    <td>
-                      <% if (stat.avg_price) { %>
-                        $<%= Number(stat.avg_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
-                      <% } else { %>
-                        N/A
-                      <% } %>
-                    </td>
-                    <td>
-                      <% if (stat.min_price && stat.max_price) { %>
-                        $<%= Number(stat.min_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %> - $<%= Number(stat.max_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
-                      <% } else { %>
-                        N/A
-                      <% } %>
-                    </td>
-                  </tr>
-                <% }); %>
-              </tbody>
-            </table>
-          </div>
-        <% } else { %>
-          <p class="notice">No classification data available.</p>
-        <% } %>
-      </div>
-    </div>
-
-    <!-- Recent Vehicles Card -->
-    <div class="dashboard-card">      <div class="card-header">
-        <span class="icon" aria-hidden="true">🕒</span>
-        <h2>Recently Added Vehicles</h2>
-      </div>
-      <div class="card-content">
-        <% if (recentVehicles && recentVehicles.length > 0) { %>
-          <div class="table-container">
-            <table class="report-table">
-              <thead>
-                <tr>
-                  <th>Vehicle</th>
-                  <th>Classification</th>
-                  <th>Price</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% recentVehicles.forEach(vehicle => { %>
-                  <tr>
-                    <td><%= vehicle.inv_year %> <%= vehicle.inv_make %> <%= vehicle.inv_model %></td>
-                    <td><%= vehicle.classification_name %></td>
-                    <td>$<%= Number(vehicle.inv_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></td>
-                    <td>
-                      <a href="/inv/detail/<%= vehicle.inv_id %>" class="btn btn-primary btn-sm">View Details</a>
-                    </td>
-                  </tr>
-                <% }); %>
-              </tbody>
-            </table>
-          </div>
-        <% } else { %>
-          <p class="notice">No recent vehicles found.</p>
-        <% } %>
-      </div>
-    </div>
-
-    <!-- Report Actions Card -->
-    <div class="dashboard-card">      <div class="card-header">
-        <span class="icon" aria-hidden="true">📤</span>
-        <h2>Report Actions</h2>
-      </div>
-      <div class="card-content">
-        <div class="action-buttons">          <button type="button" class="btn btn-secondary" onclick="window.print()">
-            <span class="icon" aria-hidden="true">🖨️</span>
-            Print Report
-          </button>
-          <button type="button" class="btn btn-secondary" onclick="exportToCSV()">
-            <span class="icon" aria-hidden="true">📥</span>
-            Export to CSV
-          </button>
-          <a href="/inv" class="btn btn-primary">
-            <span class="icon" aria-hidden="true">←</span>
-            Back to Management
-          </a>
+  <div class="report-page">
+    <div class="dashboard-grid">
+      <!-- Overall Statistics Card -->
+      <div class="dashboard-card">
+        <div class="card-header">
+          <span class="icon" aria-hidden="true">📊</span>
+          <h2>Overall Statistics</h2>
         </div>
-      </div>    </div>
+        <div class="card-content">
+          <% if (stats) { %>
+            <div class="stats-grid">
+              <div class="stat-item">
+                <span class="stat-label">Total Vehicles</span>
+                <span class="stat-value"><%= stats.total_vehicles %></span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Classifications</span>
+                <span class="stat-value"><%= stats.total_classifications %></span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Average Price</span>
+                <span class="stat-value">$<%= Number(stats.average_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Total Value</span>
+                <span class="stat-value">$<%= Number(stats.total_value).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Price Range</span>
+                <span class="stat-value">$<%= Number(stats.min_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %> - $<%= Number(stats.max_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></span>
+              </div>
+            </div>
+          <% } else { %>
+            <p class="notice">No statistics available at this time.</p>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- Classification Breakdown Card -->
+      <div class="dashboard-card">
+        <div class="card-header">
+          <span class="icon" aria-hidden="true">📋</span>
+          <h2>Classification Breakdown</h2>
+        </div>
+        <div class="card-content">
+          <% if (classificationStats && classificationStats.length > 0) { %>
+            <div class="table-container">
+              <div class="table-wrapper">
+                <table class="report-table">
+                  <thead>
+                    <tr>
+                      <th>Classification</th>
+                      <th>Vehicle Count</th>
+                      <th>Avg Price</th>
+                      <th>Price Range</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% classificationStats.forEach(stat => { %>
+                      <tr>
+                        <td><%= stat.classification_name %></td>
+                        <td><%= stat.vehicle_count %></td>
+                        <td>
+                          <% if (stat.avg_price) { %>
+                            $<%= Number(stat.avg_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
+                          <% } else { %>
+                            N/A
+                          <% } %>
+                        </td>
+                        <td>
+                          <% if (stat.min_price && stat.max_price) { %>
+                            $<%= Number(stat.min_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %> - $<%= Number(stat.max_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %>
+                          <% } else { %>
+                            N/A
+                          <% } %>
+                        </td>
+                      </tr>
+                    <% }); %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          <% } else { %>
+            <p class="notice">No classification data available.</p>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- Recent Vehicles Card -->
+      <div class="dashboard-card">
+        <div class="card-header">
+          <span class="icon" aria-hidden="true">🕒</span>
+          <h2>Recently Added Vehicles</h2>
+        </div>
+        <div class="card-content">
+          <% if (recentVehicles && recentVehicles.length > 0) { %>
+            <div class="table-container">
+              <div class="table-wrapper">              <div class="table-wrapper">
+                <table class="report-table">
+                  <thead>
+                    <tr>
+                      <th>Vehicle</th>
+                      <th>Classification</th>
+                      <th>Price</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% recentVehicles.forEach(vehicle => { %>
+                      <tr>
+                        <td><%= vehicle.inv_year %> <%= vehicle.inv_make %> <%= vehicle.inv_model %></td>
+                        <td><%= vehicle.classification_name %></td>
+                        <td>$<%= Number(vehicle.inv_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) %></td>
+                        <td>
+                          <a href="/inv/detail/<%= vehicle.inv_id %>" class="btn btn-primary btn-sm">View Details</a>
+                        </td>
+                      </tr>
+                    <% }); %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          <% } else { %>
+            <p class="notice">No recent vehicles found.</p>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- Report Actions Card -->
+      <div class="dashboard-card">
+        <div class="card-header">
+          <span class="icon" aria-hidden="true">📤</span>
+          <h2>Report Actions</h2>
+        </div>
+        <div class="card-content">
+          <div class="action-buttons">
+            <button type="button" class="btn btn-secondary" onclick="window.print()">
+              <span class="icon" aria-hidden="true">🖨️</span>
+              Print Report
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="exportToCSV()">
+              <span class="icon" aria-hidden="true">📥</span>
+              Export to CSV
+            </button>
+            <a href="/inv" class="btn btn-primary">
+              <span class="icon" aria-hidden="true">←</span>
+              Back to Management
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 <script>
