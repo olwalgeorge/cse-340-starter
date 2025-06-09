@@ -22,6 +22,14 @@ router.get('/github/callback',
   }),
   async (req, res) => {
     try {
+      console.log('OAuth callback - User object:', req.user)
+      
+      if (!req.user) {
+        console.error('No user object found in OAuth callback')
+        req.flash('notice', 'Authentication failed. No user data received.')
+        return res.redirect('/account/login')
+      }
+      
       // Create user data object (same structure as regular login)
       const userData = {
         account_id: req.user.account_id,
@@ -30,6 +38,8 @@ router.get('/github/callback',
         account_email: req.user.account_email,
         account_type: req.user.account_type
       }
+      
+      console.log('Creating JWT for user:', userData)
       
       // Create JWT token (same as regular login)
       const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
@@ -40,6 +50,8 @@ router.get('/github/callback',
       } else {
         res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
       }
+      
+      console.log('JWT cookie set, redirecting to /account/')
       
       // Set flash message for successful login
       req.flash('notice', `Welcome ${req.user.account_firstname}! You have successfully signed in with GitHub.`)
