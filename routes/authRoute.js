@@ -19,13 +19,10 @@ router.get('/github/callback',
   passport.authenticate('github', { 
     failureRedirect: '/account/login',
     failureMessage: true 
-  }),
-  async (req, res) => {
+  }),  async (req, res) => {
     try {
-      console.log('OAuth callback - User object:', req.user)
-      
       if (!req.user) {
-        console.error('No user object found in OAuth callback')
+        console.error('OAuth callback: No user object found')
         req.flash('notice', 'Authentication failed. No user data received.')
         return res.redirect('/account/login')
       }
@@ -36,11 +33,9 @@ router.get('/github/callback',
         account_firstname: req.user.account_firstname,
         account_lastname: req.user.account_lastname,
         account_email: req.user.account_email,
-        account_type: req.user.account_type
-      }
-        console.log('Creating JWT for user:', userData)
+        account_type: req.user.account_type      }
+      
       console.log('ACCESS_TOKEN_SECRET exists:', !!process.env.ACCESS_TOKEN_SECRET)
-      console.log('ACCESS_TOKEN_SECRET length:', process.env.ACCESS_TOKEN_SECRET ? process.env.ACCESS_TOKEN_SECRET.length : 'undefined')
       
       if (!process.env.ACCESS_TOKEN_SECRET) {
         console.error('ACCESS_TOKEN_SECRET environment variable is missing!')
@@ -53,12 +48,9 @@ router.get('/github/callback',
       
       // Set JWT cookie (same as regular login)
       if (process.env.NODE_ENV === 'development') {
-        res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
-      } else {
+        res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })      } else {
         res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
       }
-      
-      console.log('JWT cookie set, redirecting to /account/')
       
       // Set flash message for successful login
       req.flash('notice', `Welcome ${req.user.account_firstname}! You have successfully signed in with GitHub.`)
