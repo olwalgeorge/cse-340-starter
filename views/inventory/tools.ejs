@@ -143,155 +143,279 @@
       </div>
     </div>
   </div>
-
-  <!-- Status Modal -->
-  <div id="status-modal" class="modal" style="display: none;">
+  <!-- Enhanced Animated Status Modal -->
+  <div id="status-modal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
         <h3 id="modal-title">Processing...</h3>
-        <span class="close" onclick="closeModal()">&times;</span>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close modal">&times;</button>
       </div>
       <div class="modal-body">
-        <p id="modal-message">Please wait while the operation completes.</p>
-        <div class="progress-bar">
-          <div class="progress-fill" id="progress-fill"></div>
+        <div class="modal-icon" id="modal-icon">⚙️</div>
+        <p class="modal-message" id="modal-message">Please wait while the operation completes.</p>
+        <div class="progress-container" id="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+          <div class="progress-text" id="progress-text">0%</div>
         </div>
-      </div>    </div>
+        <div class="status-indicator" id="status-indicator" style="display: none;">
+          <span id="status-text">Operation completed successfully</span>
+        </div>
+      </div>
+      <div class="modal-actions" id="modal-actions" style="display: none;">
+        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+      </div>
+    </div>
   </div>
 
 <script>
-// Modal functions
-function showModal(title, message) {
-  document.getElementById('modal-title').textContent = title;
-  document.getElementById('modal-message').textContent = message;
-  document.getElementById('status-modal').style.display = 'block';
+// Enhanced Modal functions with animations and progress
+function showModal(title, message, icon = '⚙️', type = 'info') {
+  const modal = document.getElementById('status-modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalMessage = document.getElementById('modal-message');
+  const modalIcon = document.getElementById('modal-icon');
+  const progressContainer = document.getElementById('progress-container');
+  const progressFill = document.getElementById('progress-fill');
+  const progressText = document.getElementById('progress-text');
+  const statusIndicator = document.getElementById('status-indicator');
+  const modalActions = document.getElementById('modal-actions');
+
+  // Reset modal state
+  modalTitle.textContent = title;
+  modalMessage.textContent = message;
+  modalIcon.textContent = icon;
+  modalIcon.className = `modal-icon ${type}`;
+  progressContainer.style.display = 'block';
+  statusIndicator.style.display = 'none';
+  modalActions.style.display = 'none';
+  progressFill.style.width = '0%';
+  progressText.textContent = '0%';
+
+  // Show modal with animation
+  modal.classList.add('show');
+  
+  // Start progress animation
+  animateProgress();
+}
+
+function animateProgress() {
+  const progressFill = document.getElementById('progress-fill');
+  const progressText = document.getElementById('progress-text');
+  let progress = 0;
+  
+  const interval = setInterval(() => {
+    progress += Math.random() * 15 + 5; // Random progress increments
+    if (progress > 100) progress = 100;
+    
+    progressFill.style.width = progress + '%';
+    progressText.textContent = Math.round(progress) + '%';
+    
+    if (progress >= 100) {
+      clearInterval(interval);
+    }
+  }, 200);
+}
+
+function showSuccess(message) {
+  const progressContainer = document.getElementById('progress-container');
+  const statusIndicator = document.getElementById('status-indicator');
+  const statusText = document.getElementById('status-text');
+  const modalActions = document.getElementById('modal-actions');
+  const modalIcon = document.getElementById('modal-icon');
+
+  progressContainer.style.display = 'none';
+  statusIndicator.className = 'status-indicator success';
+  statusIndicator.style.display = 'flex';
+  statusText.textContent = message;
+  modalActions.style.display = 'flex';
+  modalIcon.className = 'modal-icon success';
+  modalIcon.textContent = '✅';
+}
+
+function showError(message) {
+  const progressContainer = document.getElementById('progress-container');
+  const statusIndicator = document.getElementById('status-indicator');
+  const statusText = document.getElementById('status-text');
+  const modalActions = document.getElementById('modal-actions');
+  const modalIcon = document.getElementById('modal-icon');
+
+  progressContainer.style.display = 'none';
+  statusIndicator.className = 'status-indicator error';
+  statusIndicator.style.display = 'flex';
+  statusText.textContent = message;
+  modalActions.style.display = 'flex';
+  modalIcon.className = 'modal-icon error';
+  modalIcon.textContent = '❌';
+}
+
+function showWarning(message) {
+  const progressContainer = document.getElementById('progress-container');
+  const statusIndicator = document.getElementById('status-indicator');
+  const statusText = document.getElementById('status-text');
+  const modalActions = document.getElementById('modal-actions');
+  const modalIcon = document.getElementById('modal-icon');
+
+  progressContainer.style.display = 'none';
+  statusIndicator.className = 'status-indicator warning';
+  statusIndicator.style.display = 'flex';
+  statusText.textContent = message;
+  modalActions.style.display = 'flex';
+  modalIcon.className = 'modal-icon warning';
+  modalIcon.textContent = '⚠️';
 }
 
 function closeModal() {
-  document.getElementById('status-modal').style.display = 'none';
+  const modal = document.getElementById('status-modal');
+  modal.classList.remove('show');
 }
 
-// Tool functions (these would typically make AJAX calls to backend endpoints)
+// Enhanced Tool functions with better UX
 function validateData() {
-  showModal('Data Validation', 'Validating data integrity...');
-  // Simulate processing
+  showModal('Data Validation', 'Validating data integrity...', '🔍', 'info');
+  
   setTimeout(() => {
-    document.getElementById('modal-message').textContent = 'Data validation completed successfully. No issues found.';
-  }, 2000);
+    showSuccess('Data validation completed successfully. No issues found.');
+  }, 2500);
 }
 
 function cleanupData() {
   if (confirm('This will remove orphaned records. Are you sure?')) {
-    showModal('Data Cleanup', 'Cleaning up orphaned records...');
+    showModal('Data Cleanup', 'Cleaning up orphaned records...', '🧹', 'warning');
+    
     setTimeout(() => {
-      document.getElementById('modal-message').textContent = 'Cleanup completed. 0 orphaned records removed.';
-    }, 1500);
+      showSuccess('Cleanup completed. 0 orphaned records removed.');
+    }, 2000);
   }
 }
 
 function optimizeDatabase() {
-  showModal('Database Optimization', 'Optimizing database performance...');
+  showModal('Database Optimization', 'Optimizing database performance...', '⚡', 'info');
+  
   setTimeout(() => {
-    document.getElementById('modal-message').textContent = 'Database optimization completed successfully.';
-  }, 3000);
+    showSuccess('Database optimization completed successfully.');
+  }, 3500);
 }
 
 function bulkPriceUpdate() {
   const percentage = prompt('Enter price adjustment percentage (e.g., 5 for 5% increase, -10 for 10% decrease):');
   if (percentage !== null && !isNaN(percentage)) {
-    showModal('Bulk Price Update', `Updating prices by ${percentage}%...`);
+    showModal('Bulk Price Update', `Updating prices by ${percentage}%...`, '💰', 'info');
+    
     setTimeout(() => {
-      document.getElementById('modal-message').textContent = `Price update completed for all vehicles.`;
-    }, 2000);
+      showSuccess(`Price update completed for all vehicles.`);
+    }, 3000);
   }
 }
 
 function bulkStatusUpdate() {
-  showModal('Bulk Status Update', 'Updating vehicle statuses...');
+  showModal('Bulk Status Update', 'Updating vehicle statuses...', '🔄', 'info');
+  
   setTimeout(() => {
-    document.getElementById('modal-message').textContent = 'Status update completed successfully.';
-  }, 1500);
+    showSuccess('Status update completed successfully.');
+  }, 2000);
 }
 
 function bulkDelete() {
   if (confirm('WARNING: This will permanently delete selected records. This action cannot be undone. Continue?')) {
-    showModal('Bulk Delete', 'Processing deletion request...');
+    showModal('Bulk Delete', 'Processing deletion request...', '🗑️', 'warning');
+    
     setTimeout(() => {
-      document.getElementById('modal-message').textContent = 'Bulk deletion completed.';
-    }, 2000);
+      showWarning('Bulk deletion completed. Please review the changes.');
+    }, 2500);
   }
 }
 
 function importCSV(input) {
   if (input.files && input.files[0]) {
-    showModal('CSV Import', 'Processing CSV file...');
+    showModal('CSV Import', 'Processing CSV file...', '📤', 'info');
+    
     setTimeout(() => {
-      document.getElementById('modal-message').textContent = 'CSV import completed successfully.';
-    }, 2500);
+      showSuccess('CSV import completed successfully.');
+    }, 3000);
   }
 }
 
 function exportInventory() {
-  showModal('Data Export', 'Generating export file...');
+  showModal('Data Export', 'Generating export file...', '📥', 'info');
+  
   setTimeout(() => {
-    document.getElementById('modal-message').textContent = 'Export completed. Download will begin shortly.';
+    showSuccess('Export completed. Download will begin shortly.');
     // In a real implementation, this would trigger a file download
-  }, 2000);
-}
-
-function generateBackup() {
-  showModal('Backup Generation', 'Creating system backup...');
-  setTimeout(() => {
-    document.getElementById('modal-message').textContent = 'Backup created successfully.';
-  }, 3000);
-}
-
-function clearCache() {
-  showModal('Cache Management', 'Clearing system cache...');
-  setTimeout(() => {
-    document.getElementById('modal-message').textContent = 'Cache cleared successfully.';
-  }, 1000);
-}
-
-function updateThumbnails() {
-  showModal('Thumbnail Update', 'Regenerating vehicle thumbnails...');
-  setTimeout(() => {
-    document.getElementById('modal-message').textContent = 'Thumbnail regeneration completed.';
-  }, 4000);
-}
-
-function runHealthCheck() {
-  showModal('Health Check', 'Running system health check...');
-  setTimeout(() => {
-    document.getElementById('modal-message').textContent = 'Health check completed. All systems operational.';
   }, 2500);
 }
 
-function createBackup() {
-  showModal('Backup Creation', 'Creating new backup...');
+function generateBackup() {
+  showModal('Backup Generation', 'Creating system backup...', '💾', 'info');
+  
   setTimeout(() => {
-    document.getElementById('modal-message').textContent = 'Backup created successfully and stored securely.';
+    showSuccess('Backup created successfully.');
+  }, 3500);
+}
+
+function clearCache() {
+  showModal('Cache Management', 'Clearing system cache...', '🧽', 'info');
+  
+  setTimeout(() => {
+    showSuccess('Cache cleared successfully. System performance improved.');
+  }, 1500);
+}
+
+function updateThumbnails() {
+  showModal('Thumbnail Update', 'Regenerating vehicle thumbnails...', '🖼️', 'info');
+  
+  setTimeout(() => {
+    showSuccess('Thumbnail regeneration completed.');
+  }, 4500);
+}
+
+function runHealthCheck() {
+  showModal('Health Check', 'Running system health check...', '💓', 'info');
+  
+  setTimeout(() => {
+    showSuccess('Health check completed. All systems operational.');
   }, 3000);
 }
 
+function createBackup() {
+  showModal('Backup Creation', 'Creating new backup...', '🛡️', 'info');
+  
+  setTimeout(() => {
+    showSuccess('Backup created successfully and stored securely.');
+  }, 3500);
+}
+
 function viewBackups() {
-  alert('Backup management interface would open here. Available backups:\n- backup_2024_01_15.sql\n- backup_2024_01_10.sql\n- backup_2024_01_05.sql');
+  showModal('Backup List', 'Loading backup information...', '📋', 'info');
+  
+  setTimeout(() => {
+    showSuccess('Available backups:\n• backup_2024_01_15.sql\n• backup_2024_01_10.sql\n• backup_2024_01_05.sql');
+  }, 1000);
 }
 
 function restoreBackup() {
   if (confirm('WARNING: Restoring from backup will overwrite current data. Are you sure?')) {
-    showModal('Backup Restoration', 'Restoring from backup...');
+    showModal('Backup Restoration', 'Restoring from backup...', '↶', 'warning');
+    
     setTimeout(() => {
-      document.getElementById('modal-message').textContent = 'Backup restoration completed successfully.';
-    }, 4000);
+      showSuccess('Backup restoration completed successfully.');
+    }, 4500);
   }
 }
 
 // Close modal when clicking outside of it
 window.onclick = function(event) {
   const modal = document.getElementById('status-modal');
-  if (event.target == modal) {
+  if (event.target === modal) {
     closeModal();
   }
 }
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape') {
+    closeModal();
+  }
+});
 </script>
