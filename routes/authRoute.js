@@ -38,8 +38,15 @@ router.get('/github/callback',
         account_email: req.user.account_email,
         account_type: req.user.account_type
       }
+        console.log('Creating JWT for user:', userData)
+      console.log('ACCESS_TOKEN_SECRET exists:', !!process.env.ACCESS_TOKEN_SECRET)
+      console.log('ACCESS_TOKEN_SECRET length:', process.env.ACCESS_TOKEN_SECRET ? process.env.ACCESS_TOKEN_SECRET.length : 'undefined')
       
-      console.log('Creating JWT for user:', userData)
+      if (!process.env.ACCESS_TOKEN_SECRET) {
+        console.error('ACCESS_TOKEN_SECRET environment variable is missing!')
+        req.flash('notice', 'Server configuration error. Please contact administrator.')
+        return res.redirect('/account/login')
+      }
       
       // Create JWT token (same as regular login)
       const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
