@@ -2234,111 +2234,586 @@ textarea.form-input {
 }
 
 /* ===============================================
-   Checkbox Styling for Form Options
+   SOPHISTICATED INVENTORY DASHBOARD STYLES
    =============================================== */
 
-/* Form options container (for checkbox and forgot password link) */
-.form-options {
+/* Main Inventory Dashboard Container */
+.inventory-dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.08) 100%);
+  border-radius: 24px;
+  backdrop-filter: blur(20px);
+}
+
+/* Modern Dashboard Header */
+.dashboard-header-modern {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-  gap: 1rem;
+  padding: 2.5rem 0;
+  margin-bottom: 3rem;
+  border-bottom: 2px solid var(--hero-border);
+  position: relative;
 }
 
-/* Custom checkbox wrapper */
-.checkbox-wrapper {
+.dashboard-header-modern::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cta-bg), var(--link-color));
+  border-radius: 1px;
+}
+
+.header-content {
   display: flex;
   align-items: center;
-  cursor: pointer;
+  gap: 1.5rem;
+}
+
+.header-icon {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, var(--cta-bg), var(--link-color));
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+}
+
+.management-icon {
+  width: 32px;
+  height: 32px;
+  color: white;
+  stroke-width: 2;
+}
+
+.header-text .dashboard-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  background: linear-gradient(135deg, var(--heading-color), var(--link-color));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header-text .dashboard-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-color);
+  opacity: 0.8;
+  margin: 0;
+  font-weight: 400;
+}
+
+.header-stats {
+  display: flex;
+  gap: 2rem;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 1rem 1.5rem;
+  background: var(--hero-bg);
+  border: 1px solid var(--hero-border);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.stat-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--cta-bg);
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--text-color);
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Section Titles */
+.section-title {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-title h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--heading-color);
+  margin: 0 0 0.5rem 0;
+}
+
+.section-title p {
+  color: var(--text-color);
+  opacity: 0.8;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Hero Cards Section */
+.hero-cards-section {
+  margin-bottom: 4rem;
+}
+
+.hero-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.hero-card {
+  position: relative;
+  background: var(--body-bg);
+  border: 2px solid var(--hero-border);
+  border-radius: 24px;
+  padding: 2.5rem;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.hero-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+  border-color: var(--cta-bg);
+}
+
+.card-gradient-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.primary-card .card-gradient-bg {
+  background: linear-gradient(90deg, #3b82f6, #06b6d4);
+}
+
+.secondary-card .card-gradient-bg {
+  background: linear-gradient(90deg, #8b5cf6, #f59e0b);
+}
+
+.hero-card:hover .card-gradient-bg {
+  opacity: 1;
+}
+
+.hero-card .card-icon {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, var(--cta-bg), var(--link-color));
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+}
+
+.hero-card .card-icon svg {
+  width: 28px;
+  height: 28px;
+  color: white;
+  stroke-width: 2.5;
+}
+
+.hero-card h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--heading-color);
+  margin: 0 0 1rem 0;
+}
+
+.hero-card p {
+  color: var(--text-color);
+  opacity: 0.9;
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+  font-size: 1rem;
+}
+
+.card-features {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.feature {
+  background: var(--hero-bg);
+  border: 1px solid var(--hero-border);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.btn-primary-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, var(--cta-bg), var(--link-color));
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+}
+
+.btn-primary-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+  text-decoration: none;
+  color: white;
+}
+
+/* Management Section */
+.management-section {
+  margin-bottom: 3rem;
+}
+
+.management-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 2rem;
+}
+
+.management-card {
+  background: var(--body-bg);
+  border: 1px solid var(--hero-border);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.management-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.edit-card::before {
+  background: linear-gradient(90deg, #f59e0b, #ef4444);
+}
+
+.analytics-card::before {
+  background: linear-gradient(90deg, #10b981, #06b6d4);
+}
+
+.tools-card::before {
+  background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+}
+
+.management-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  border-color: var(--link-color);
+}
+
+.management-card:hover::before {
+  opacity: 1;
+}
+
+.card-header-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--hero-bg);
+  border: 1px solid var(--hero-border);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.management-card:hover .card-header-icon {
+  background: var(--cta-bg);
+  border-color: var(--cta-bg);
+}
+
+.card-header-icon svg {
+  width: 24px;
+  height: 24px;
+  color: var(--text-color);
+  stroke-width: 2;
+  transition: color 0.3s ease;
+}
+
+.management-card:hover .card-header-icon svg {
+  color: white;
+}
+
+.management-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--heading-color);
+  margin: 0 0 1rem 0;
+}
+
+.management-card p {
+  color: var(--text-color);
+  opacity: 0.8;
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+}
+
+/* Dropdown Section Styling */
+.dropdown-section {
+  margin-top: 1.5rem;
+}
+
+.dropdown-label {
+  display: block;
+  font-weight: 600;
+  color: var(--heading-color);
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+}
+
+#classificationList {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--hero-border);
+  border-radius: 10px;
+  background: var(--body-bg);
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+#classificationList:focus {
+  outline: none;
+  border-color: var(--cta-bg);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.inventory-table-container {
+  margin-top: 1rem;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--hero-border);
+}
+
+.modern-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--body-bg);
+}
+
+.modern-table th {
+  background: var(--hero-bg);
+  color: var(--heading-color);
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid var(--hero-border);
+}
+
+.modern-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--hero-border);
+  color: var(--text-color);
+}
+
+.modern-table tr:hover {
+  background: rgba(59, 130, 246, 0.05);
+}
+
+.modern-table a {
+  color: var(--cta-bg);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.modern-table a:hover {
+  background: var(--cta-bg);
+  color: white;
+  text-decoration: none;
+}
+
+/* Analytics Preview */
+.analytics-preview {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.metric {
+  text-align: center;
+  padding: 1rem;
+  background: var(--hero-bg);
+  border: 1px solid var(--hero-border);
+  border-radius: 10px;
+  flex: 1;
+}
+
+.metric-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cta-bg);
+  margin-bottom: 0.25rem;
+}
+
+.metric-label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-color);
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Tools List */
+.tools-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.tool-item {
+  background: var(--hero-bg);
+  border: 1px solid var(--hero-border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
   font-size: 0.9rem;
   color: var(--text-color);
-  user-select: none;
-  position: relative;
-  padding-left: 2rem;
-  margin: 0;
-  line-height: 1.4;
+  font-weight: 500;
 }
 
-/* Hide the default checkbox */
-.checkbox-wrapper input[type="checkbox"] {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
+/* Action Buttons */
+.btn-analytics, .btn-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--hero-bg);
+  color: var(--text-color);
+  border: 2px solid var(--hero-border);
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
 }
 
-/* Create custom checkbox appearance */
-.checkbox-wrapper .checkmark {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 18px;
-  width: 18px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 2px solid rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+.btn-analytics:hover, .btn-tools:hover {
+  background: var(--cta-bg);
+  color: white;
+  border-color: var(--cta-bg);
+  transform: translateY(-2px);
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
 }
 
-/* Dark mode checkmark styling */
-@media (prefers-color-scheme: dark) {
-  .checkbox-wrapper .checkmark {
-    background-color: rgba(50, 50, 50, 0.8);
-    border-color: rgba(255, 255, 255, 0.3);
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .hero-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .management-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
 }
 
-/* Hover effect for checkbox */
-.checkbox-wrapper:hover .checkmark {
-  border-color: #667eea;
-  background-color: rgba(102, 126, 234, 0.05);
-  transform: translateY(-50%) scale(1.05);
-}
-
-/* When checkbox is checked */
-.checkbox-wrapper input[type="checkbox"]:checked ~ .checkmark {
-  background-color: #667eea;
-  border-color: #667eea;
-}
-
-/* Create the checkmark/indicator (hidden when not checked) */
-.checkbox-wrapper .checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-  left: 5px;
-  top: 2px;
-  width: 4px;
-  height: 8px;
-  border: solid white;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-}
-
-/* Show the checkmark when checked */
-.checkbox-wrapper input[type="checkbox"]:checked ~ .checkmark:after {
-  display: block;
-}
-
-/* Focus styling for accessibility */
-.checkbox-wrapper input[type="checkbox"]:focus ~ .checkmark {
-  outline: 2px solid #667eea;
-  outline-offset: 2px;
-}
-
-/* Responsive adjustments for mobile */
 @media (max-width: 768px) {
-  .form-options {
+  .inventory-dashboard {
+    padding: 1rem;
+  }
+  
+  .dashboard-header-modern {
     flex-direction: column;
-    align-items: flex-start;
+    gap: 2rem;
+    text-align: center;
+  }
+  
+  .header-stats {
+    justify-content: center;
+  }
+  
+  .header-text .dashboard-title {
+    font-size: 2rem;
+  }
+  
+  .hero-cards-grid {
+    grid-template-columns: 1fr;
     gap: 1.5rem;
   }
   
-  .checkbox-wrapper {
-    font-size: 0.85rem;
+  .hero-card {
+    padding: 2rem;
+  }
+  
+  .management-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .analytics-preview {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .card-features {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-text .dashboard-title {
+    font-size: 1.75rem;
+  }
+  
+  .hero-card {
+    padding: 1.5rem;
+  }
+  
+  .management-card {
+    padding: 1.5rem;
+  }
+  
+  .section-title h2 {
+    font-size: 1.5rem;
   }
 }
