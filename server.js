@@ -16,6 +16,7 @@ const pool = require('./database/')
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
 const connectPgSimple = require("connect-pg-simple")(session)
+const passport = require("./utilities/passport-config")
 
 
 /* ***********************
@@ -49,6 +50,11 @@ app.use(function(req, res, next){
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(cookieParser())
+
+// Initialize Passport
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.use(utilities.checkJWTToken)
 
 /* ***********************
@@ -61,6 +67,9 @@ app.use("/inv", require("./routes/inventoryRoute"))
 
 // Account routes
 app.use("/account", require("./routes/accountRoute"))
+
+// Auth routes (OAuth)
+app.use("/auth", require("./routes/authRoute"))
 
 // Index route
 app.get("/", utilities.handleErrors(async function(req, res){
