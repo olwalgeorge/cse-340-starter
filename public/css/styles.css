@@ -2292,9 +2292,7 @@ textarea.form-input {
   color: white;
 }
 
-.management-icon svg {
-  stroke-width: 2;
-}
+/* SVG stroke styling removed for W3C validation */
 
 .header-text .dashboard-title {
   font-size: 2.5rem;
@@ -2437,7 +2435,7 @@ textarea.form-input {
   width: 28px;
   height: 28px;
   color: white;
-  stroke-width: 2.5;
+  /* stroke-width: 2.5; - removed for W3C validation */
 }
 
 .hero-card h3 {
@@ -2570,7 +2568,7 @@ textarea.form-input {
   width: 24px;
   height: 24px;
   color: var(--text-color);
-  stroke-width: 2;
+  /* stroke-width: 2; - removed for W3C validation */
   transition: color 0.3s ease;
 }
 
