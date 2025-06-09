@@ -2,6 +2,8 @@ const express = require('express')
 const router = new express.Router()
 const passport = require('../utilities/passport-config')
 const utilities = require('../utilities/')
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 /* ***************************
  *  GitHub OAuth Routes
@@ -20,8 +22,8 @@ router.get('/github/callback',
   }),
   async (req, res) => {
     try {
-      // Set user session data
-      req.session.user = {
+      // Create user data object (same structure as regular login)
+      const userData = {
         account_id: req.user.account_id,
         account_firstname: req.user.account_firstname,
         account_lastname: req.user.account_lastname,
@@ -29,7 +31,15 @@ router.get('/github/callback',
         account_type: req.user.account_type
       }
       
-      req.session.loggedin = true
+      // Create JWT token (same as regular login)
+      const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+      
+      // Set JWT cookie (same as regular login)
+      if (process.env.NODE_ENV === 'development') {
+        res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+      } else {
+        res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
+      }
       
       // Set flash message for successful login
       req.flash('notice', `Welcome ${req.user.account_firstname}! You have successfully signed in with GitHub.`)
