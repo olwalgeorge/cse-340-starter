@@ -24,27 +24,42 @@ passport.use(new GitHubStrategy({
       // User exists, return user
       return done(null, user)
     }
-    
-    // Check if user exists with same email
+      // Check if user exists with same email
     const emails = profile.emails || []
     console.log('GitHub profile emails:', emails)
     
+    // Try to find a primary or verified email
+    let primaryEmail = null
     if (emails.length > 0) {
-      user = await accountModel.getAccountByEmail(emails[0].value)
-      if (user) {
-        console.log('Found existing user by email, linking GitHub account:', user.account_email)
-        // Link GitHub account to existing user
-        const linkedUser = await accountModel.linkGitHubAccount(user.account_id, profile.id)
-        return done(null, linkedUser)
+      // Look for primary email first
+      primaryEmail = emails.find(email => email.primary)?.value || 
+                    emails.find(email => email.verified)?.value || 
+                    emails[0].value
+      
+      console.log('Using email:', primaryEmail)
+      
+      if (primaryEmail) {
+        user = await accountModel.getAccountByEmail(primaryEmail)
+        if (user) {
+          console.log('Found existing user by email, linking GitHub account:', user.account_email)
+          // Link GitHub account to existing user
+          const linkedUser = await accountModel.linkGitHubAccount(user.account_id, profile.id)
+          return done(null, linkedUser)
+        }
       }
     }
     
-    // Create new user from GitHub profile
+    // If no email from GitHub, we can't proceed
+    if (!primaryEmail) {
+      console.error('No email available from GitHub profile')
+      return done(new Error('No email address available from GitHub. Please make sure your GitHub email is public or verified.'), null)
+    }
+      // Create new user from GitHub profile
     console.log('Creating new user from GitHub profile')
     const newUser = {
       account_firstname: profile.displayName ? profile.displayName.split(' ')[0] || profile.username : profile.username,
       account_lastname: profile.displayName ? profile.displayName.split(' ').slice(1).join(' ') || 'User' : 'User',
-      account_email: emails.length > 0 ? emails[0].value : `${profile.username}@github.local`,
+      account_email: primaryEmail,
       github_id: profile.id,
       account_type: 'Client'
     }
