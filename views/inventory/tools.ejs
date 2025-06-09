@@ -15,14 +15,16 @@
         <h2>Data Management</h2>
       </div>
       <div class="card-content">
-        <p class="card-description">Tools for managing your inventory data and maintaining data integrity.</p>
-        <div class="tool-buttons">          <button type="button" class="btn btn-secondary" onclick="validateData()">
+        <p class="card-description">Tools for managing your inventory data and maintaining data integrity.</p>        <div class="tool-buttons">
+          <button type="button" class="btn btn-secondary" onclick="validateData()">
             <span class="icon" aria-hidden="true">✅</span>
             Validate Data Integrity
-          </button>          <button type="button" class="btn btn-secondary" onclick="cleanupData()">
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="cleanupData()">
             <span class="icon" aria-hidden="true">🧹</span>
             Clean Up Orphaned Records
-          </button>          <button type="button" class="btn btn-secondary" onclick="optimizeDatabase()">
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="optimizeDatabase()">
             <span class="icon" aria-hidden="true">⚡</span>
             Optimize Database
           </button>
@@ -36,8 +38,8 @@
         <h2>Bulk Operations</h2>
       </div>
       <div class="card-content">
-        <p class="card-description">Perform operations on multiple inventory items at once.</p>
-        <div class="tool-buttons">          <button type="button" class="btn btn-secondary" onclick="bulkPriceUpdate()">
+        <p class="card-description">Perform operations on multiple inventory items at once.</p>        <div class="tool-buttons">
+          <button type="button" class="btn btn-secondary" onclick="bulkPriceUpdate()">
             <span class="icon" aria-hidden="true">💰</span>
             Bulk Price Update
           </button>
@@ -59,8 +61,8 @@
         <h2>Import/Export</h2>
       </div>
       <div class="card-content">
-        <p class="card-description">Import and export inventory data in various formats.</p>
-        <div class="tool-buttons">          <label for="csv-import" class="btn btn-primary">
+        <p class="card-description">Import and export inventory data in various formats.</p>        <div class="tool-buttons">
+          <label for="csv-import" class="btn btn-primary">
             <span class="icon" aria-hidden="true">📤</span>
             Import CSV
             <input type="file" id="csv-import" accept=".csv" style="display: none;" onchange="importCSV(this)">
@@ -83,15 +85,16 @@
         <h2>System Maintenance</h2>
       </div>
       <div class="card-content">
-        <p class="card-description">Tools for system maintenance and optimization.</p>
-        <div class="tool-buttons">          <button type="button" class="btn btn-secondary" onclick="clearCache()">
+        <p class="card-description">Tools for system maintenance and optimization.</p>        <div class="tool-buttons">
+          <button type="button" class="btn btn-secondary" onclick="clearCache()">
             <span class="icon" aria-hidden="true">🧽</span>
             Clear Cache
           </button>
           <button type="button" class="btn btn-secondary" onclick="updateThumbnails()">
             <span class="icon" aria-hidden="true">🖼️</span>
             Regenerate Thumbnails
-          </button>          <button type="button" class="btn btn-secondary" onclick="runHealthCheck()">
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="runHealthCheck()">
             <span class="icon" aria-hidden="true">💓</span>
             System Health Check
           </button>
@@ -105,8 +108,8 @@
         <h2>Backup & Recovery</h2>
       </div>
       <div class="card-content">
-        <p class="card-description">Manage backups and data recovery options.</p>
-        <div class="tool-buttons">          <button type="button" class="btn btn-success" onclick="createBackup()">
+        <p class="card-description">Manage backups and data recovery options.</p>        <div class="tool-buttons">
+          <button type="button" class="btn btn-success" onclick="createBackup()">
             <span class="icon" aria-hidden="true">➕</span>
             Create Backup
           </button>
@@ -127,8 +130,8 @@
         <span class="icon" aria-hidden="true">←</span>
         <h2>Navigation</h2>
       </div>
-      <div class="card-content">
-        <div class="tool-buttons">          <a href="/inv" class="btn btn-primary">
+      <div class="card-content">        <div class="tool-buttons">
+          <a href="/inv" class="btn btn-primary">
             <span class="icon" aria-hidden="true">📊</span>
             Back to Management Dashboard
           </a>

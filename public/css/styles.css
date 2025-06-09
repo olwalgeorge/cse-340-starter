@@ -2449,7 +2449,6 @@ textarea.form-input {
   opacity: 0.9;
   line-height: 1.6;
   margin: 0 0 1.5rem 0;
-  font-size: 1rem;
 }
 
 .card-features {
@@ -2580,7 +2579,7 @@ textarea.form-input {
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--heading-color);
-  margin: 0 0 1rem 0;
+  margin:  0 0 1rem 0;
 }
 
 .management-card p {
@@ -2745,75 +2744,153 @@ textarea.form-input {
   box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
 }
 
-/* Responsive Design */
-@media (max-width: 1200px) {
-  .hero-cards-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .management-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  }
+/* ===============================================
+   TOOLS PAGE BUTTON UNIFORMITY
+   =============================================== */
+
+/* Tool buttons container and spacing */
+.tool-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
-@media (max-width: 768px) {
-  .inventory-dashboard {
-    padding: 1rem;
-  }
-  
-  .dashboard-header-modern {
-    flex-direction: column;
-    gap: 2rem;
-    text-align: center;
-  }
-  
-  .header-stats {
-    justify-content: center;
-  }
-  
-  .header-text .dashboard-title {
-    font-size: 2rem;
-  }
-  
-  .hero-cards-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-  
-  .hero-card {
-    padding: 2rem;
-  }
-  
-  .management-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-  
-  .analytics-preview {
-    flex-direction: column;
+/* Ensure all tool buttons have uniform styling */
+.tool-buttons .btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  padding: 0.875rem 1.25rem;
+  width: 100%;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-align: left;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  border: 2px solid transparent;
+  min-height: 48px;
+  box-sizing: border-box;
+}
+
+/* Tool button icons */
+.tool-buttons .btn .icon {
+  font-size: 1.1rem;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 20px;
+  text-align: center;
+}
+
+/* Primary buttons in tools */
+.tool-buttons .btn-primary {
+  background: linear-gradient(135deg, var(--cta-bg), var(--link-color));
+  color: white;
+  border-color: var(--cta-bg);
+}
+
+.tool-buttons .btn-primary:hover {
+  background: linear-gradient(135deg, var(--link-color), var(--cta-bg));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+  text-decoration: none;
+  color: white;
+}
+
+/* Secondary buttons in tools */
+.tool-buttons .btn-secondary {
+  background: var(--body-bg);
+  color: var(--text-color);
+  border-color: var(--hero-border);
+}
+
+.tool-buttons .btn-secondary:hover {
+  background: var(--hero-bg);
+  border-color: var(--cta-bg);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: var(--heading-color);
+}
+
+/* Success buttons in tools */
+.tool-buttons .btn-success {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border-color: #10b981;
+}
+
+.tool-buttons .btn-success:hover {
+  background: linear-gradient(135deg, #059669, #10b981);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+  text-decoration: none;
+  color: white;
+}
+
+/* Warning buttons in tools */
+.tool-buttons .btn-warning {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+  border-color: #f59e0b;
+}
+
+.tool-buttons .btn-warning:hover {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+  text-decoration: none;
+  color: white;
+}
+
+/* File input label styling for uniformity */
+.tool-buttons label.btn {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.tool-buttons label.btn input[type="file"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Responsive adjustments for tool buttons */
+@media (min-width: 768px) {
+  .tool-buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 1rem;
   }
   
-  .card-features {
-    flex-direction: column;
-    gap: 0.5rem;
+  .tool-buttons .btn {
+    flex: 1;
+    min-width: 200px;
+    justify-content: center;
   }
 }
 
-@media (max-width: 480px) {
-  .header-text .dashboard-title {
-    font-size: 1.75rem;
+@media (min-width: 1024px) {
+  .tool-buttons {
+    gap: 1.25rem;
   }
   
-  .hero-card {
-    padding: 1.5rem;
+  .tool-buttons .btn {
+    min-width: 220px;
   }
-  
-  .management-card {
-    padding: 1.5rem;
-  }
-  
-  .section-title h2 {
-    font-size: 1.5rem;
-  }
+}
+
+/* Focus states for accessibility */
+.tool-buttons .btn:focus {
+  outline: 3px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 2px;
+}
+
+/* Active states */
+.tool-buttons .btn:active {
+  transform: translateY(0);
 }
