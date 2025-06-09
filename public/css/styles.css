@@ -2232,3 +2232,113 @@ textarea.form-input {
     margin-bottom: 4rem;
   }
 }
+
+/* ===============================================
+   Checkbox Styling for Form Options
+   =============================================== */
+
+/* Form options container (for checkbox and forgot password link) */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Custom checkbox wrapper */
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  user-select: none;
+  position: relative;
+  padding-left: 2rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Hide the default checkbox */
+.checkbox-wrapper input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create custom checkbox appearance */
+.checkbox-wrapper .checkmark {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 18px;
+  width: 18px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark mode checkmark styling */
+@media (prefers-color-scheme: dark) {
+  .checkbox-wrapper .checkmark {
+    background-color: rgba(50, 50, 50, 0.8);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Hover effect for checkbox */
+.checkbox-wrapper:hover .checkmark {
+  border-color: #667eea;
+  background-color: rgba(102, 126, 234, 0.05);
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* When checkbox is checked */
+.checkbox-wrapper input[type="checkbox"]:checked ~ .checkmark {
+  background-color: #667eea;
+  border-color: #667eea;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkbox-wrapper .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 5px;
+  top: 2px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Show the checkmark when checked */
+.checkbox-wrapper input[type="checkbox"]:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Focus styling for accessibility */
+.checkbox-wrapper input[type="checkbox"]:focus ~ .checkmark {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .form-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+  
+  .checkbox-wrapper {
+    font-size: 0.85rem;
+  }
+}
