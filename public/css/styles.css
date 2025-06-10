@@ -3635,8 +3635,129 @@ textarea.form-input {
   .modal-content {
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
-  
-  .progress-bar {
+    .progress-bar {
     background: rgba(255, 255, 255, 0.1);
   }
+}
+
+/* ===============================================
+   ADAPTIVE BUTTON TEXT FOR LOGIN/REGISTER PAGES
+   =============================================== */
+
+/* Adaptive button text - hide all spans by default */
+.adaptive-btn .btn-text span,
+.adaptive-btn .btn-loading span,
+.adaptive-social-btn .social-main-text span {
+  display: none;
+}
+
+/* Show full text by default */
+.adaptive-btn .btn-text .btn-text-full,
+.adaptive-btn .btn-loading .btn-loading-full,
+.adaptive-social-btn .social-main-text .social-text-full {
+  display: inline;
+}
+
+/* Medium screens (768px and below) - show short text */
+@media (max-width: 768px) {
+  .adaptive-btn .btn-text .btn-text-full,
+  .adaptive-btn .btn-loading .btn-loading-full,
+  .adaptive-social-btn .social-main-text .social-text-full {
+    display: none;
+  }
+  
+  .adaptive-btn .btn-text .btn-text-short,
+  .adaptive-btn .btn-loading .btn-loading-short,
+  .adaptive-social-btn .social-main-text .social-text-short {
+    display: inline;
+  }
+}
+
+/* Small screens (480px and below) - show mini text */
+@media (max-width: 480px) {
+  .adaptive-btn .btn-text .btn-text-short,
+  .adaptive-btn .btn-loading .btn-loading-short,
+  .adaptive-social-btn .social-main-text .social-text-short {
+    display: none;
+  }
+  
+  .adaptive-btn .btn-text .btn-text-mini,
+  .adaptive-btn .btn-loading .btn-loading-mini,
+  .adaptive-social-btn .social-main-text .social-text-mini {
+    display: inline;
+  }
+  
+  /* Adjust social button layout for mini text */
+  .adaptive-social-btn {
+    justify-content: center;
+    padding: 0.875rem 1rem;
+  }
+}
+
+/* Extra small screens (360px and below) - further optimizations */
+@media (max-width: 360px) {
+  .adaptive-btn,
+  .adaptive-social-btn {
+    padding: 0.75rem 0.875rem;
+    font-size: 0.9rem;
+  }
+    .adaptive-social-btn .social-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Password wrapper styling for proper alignment */
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  padding-right: 3.5rem !important; /* Make room for eye icon */
+}
+
+.password-wrapper .password-toggle {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: var(--text-color);
+  opacity: 0.6;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 32px;
+}
+
+.password-wrapper .password-toggle:hover {
+  opacity: 1;
+  background: rgba(102, 126, 234, 0.1);
+}
+
+.password-wrapper .password-toggle:focus {
+  outline: 2px solid var(--focus-outline);
+  outline-offset: 2px;
+}
+
+/* Ensure password toggle works on both login and register pages */
+.form-container .password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+.form-container .password-wrapper input {
+  flex: 1;
+  padding-right: 3.5rem !important;
 }
