@@ -244,9 +244,8 @@ function signUpWithFacebook() {
 }
 
 function signUpWithGitHub() {
-  console.log('GitHub sign-up clicked');
-  // TODO: Implement GitHub OAuth registration
-  showSocialSignUpMessage('GitHub');
+  // Redirect to GitHub OAuth
+  window.location.href = '/auth/github';
 }
 
 function showSocialSignUpMessage(provider) {
