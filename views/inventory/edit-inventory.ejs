@@ -1,114 +1,439 @@
 <% if (title) { %>
-  <h1><%= title %></h1>
+  <h1 class="page-title"><%= title %></h1>
 <% } else { %>
-  <h1>Edit Vehicle</h1>
+  <h1 class="page-title">Edit Vehicle</h1>
 <% } %>
 
 <%- messages() %>
 
 <% if (errors) { %>
-  <ul class="notice">
+  <div class="notice error-notice">
     <% errors.forEach(error => { %>
-      <li><%= error.msg %></li>
+      <p><%= error.msg %></p>
     <% }); %>
-  </ul>
+  </div>
 <% } %>
 
-<form class="account-form" action="/inv/update/" method="post">
-  <div class="form-group">
-    <label for="classification_id">Classification</label>
-    <select name="classification_id" id="classification_id" required>
-      <%- classificationList %>
-    </select>
-  </div>
+<div class="report-page">
+  <div class="dashboard-grid">
+    <!-- Vehicle Information Card -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <span class="icon" aria-hidden="true">🚗</span>
+        <h2>Vehicle Information</h2>
+      </div>
+      <div class="card-content">
+        <form id="edit-vehicle-form" action="/inv/update/" method="post">
+          <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+              <!-- Classification Section -->
+            <div class="stat-item" style="text-align: left; padding: 1.5rem;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label for="classificationList" class="stat-label" style="display: block; margin-bottom: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8;">Classification</label>
+                <div style="width: 100%;">
+                  <%- classificationList %>
+                </div>
+              </div>
+            </div>
 
-  <div class="form-group">
-    <label for="inv_make">Make *</label>
-    <input type="text" id="inv_make" name="inv_make" value="<%= locals.inv_make %>" required>
-  </div>
+            <!-- Make -->
+            <div class="stat-item" style="text-align: left; padding: 1.5rem;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label for="inv_make" class="stat-label" style="display: block; margin-bottom: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8;">Make <span style="color: #e74c3c;">*</span></label>
+                <input type="text" id="inv_make" name="inv_make" value="<%= locals.inv_make %>" required class="form-input" style="width: 100%; border: 2px solid var(--hero-border); border-radius: 8px; padding: 0.75rem; background: var(--body-bg); color: var(--text-color); font-size: 1rem;">
+              </div>
+            </div>
 
-  <div class="form-group">
-    <label for="inv_model">Model *</label>
-    <input type="text" id="inv_model" name="inv_model" value="<%= locals.inv_model %>" required>
-  </div>
+            <!-- Model -->
+            <div class="stat-item" style="text-align: left; padding: 1.5rem;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label for="inv_model" class="stat-label" style="display: block; margin-bottom: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8;">Model <span style="color: #e74c3c;">*</span></label>
+                <input type="text" id="inv_model" name="inv_model" value="<%= locals.inv_model %>" required class="form-input" style="width: 100%; border: 2px solid var(--hero-border); border-radius: 8px; padding: 0.75rem; background: var(--body-bg); color: var(--text-color); font-size: 1rem;">
+              </div>
+            </div>
 
-  <div class="form-group">
-    <label for="inv_year">Year *</label>
-    <input type="text" id="inv_year" name="inv_year" value="<%= locals.inv_year %>" required>
-  </div>
+            <!-- Year -->
+            <div class="stat-item" style="text-align: left; padding: 1.5rem;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label for="inv_year" class="stat-label" style="display: block; margin-bottom: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8;">Year <span style="color: #e74c3c;">*</span></label>
+                <input type="text" id="inv_year" name="inv_year" value="<%= locals.inv_year %>" required class="form-input" style="width: 100%; border: 2px solid var(--hero-border); border-radius: 8px; padding: 0.75rem; background: var(--body-bg); color: var(--text-color); font-size: 1rem;">
+              </div>
+            </div>
 
-  <div class="form-group">
-    <label for="inv_description">Description *</label>
-    <textarea id="inv_description" name="inv_description" rows="4" required><%= locals.inv_description %></textarea>
-  </div>
+            <!-- Price -->
+            <div class="stat-item" style="text-align: left; padding: 1.5rem;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label for="inv_price" class="stat-label" style="display: block; margin-bottom: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8;">Price <span style="color: #e74c3c;">*</span></label>
+                <input type="text" id="inv_price" name="inv_price" value="<%= locals.inv_price %>" required class="form-input" style="width: 100%; border: 2px solid var(--hero-border); border-radius: 8px; padding: 0.75rem; background: var(--body-bg); color: var(--text-color); font-size: 1rem;">
+              </div>
+            </div>
 
-  <div class="form-group">
-    <label for="inv_image">Image Path *</label>
-    <input type="text" id="inv_image" name="inv_image" value="<%= locals.inv_image %>" required>
-  </div>
+            <!-- Miles -->
+            <div class="stat-item" style="text-align: left; padding: 1.5rem;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label for="inv_miles" class="stat-label" style="display: block; margin-bottom: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8;">Miles <span style="color: #e74c3c;">*</span></label>
+                <input type="text" id="inv_miles" name="inv_miles" value="<%= locals.inv_miles %>" required class="form-input" style="width: 100%; border: 2px solid var(--hero-border); border-radius: 8px; padding: 0.75rem; background: var(--body-bg); color: var(--text-color); font-size: 1rem;">
+              </div>
+            </div>
 
-  <div class="form-group">
-    <label for="inv_thumbnail">Thumbnail Path *</label>
-    <input type="text" id="inv_thumbnail" name="inv_thumbnail" value="<%= locals.inv_thumbnail %>" required>
-  </div>
+            <!-- Color -->
+            <div class="stat-item" style="text-align: left; padding: 1.5rem;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label for="inv_color" class="stat-label" style="display: block; margin-bottom: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8;">Color <span style="color: #e74c3c;">*</span></label>
+                <input type="text" id="inv_color" name="inv_color" value="<%= locals.inv_color %>" required class="form-input" style="width: 100%; border: 2px solid var(--hero-border); border-radius: 8px; padding: 0.75rem; background: var(--body-bg); color: var(--text-color); font-size: 1rem;">
+              </div>
+            </div>
 
-  <div class="form-group">
-    <label for="inv_price">Price *</label>
-    <input type="text" id="inv_price" name="inv_price" value="<%= locals.inv_price %>" required>
-  </div>
+          </div>
+        </form>
+      </div>
+    </div>
 
-  <div class="form-group">
-    <label for="inv_miles">Miles *</label>
-    <input type="text" id="inv_miles" name="inv_miles" value="<%= locals.inv_miles %>" required>
-  </div>
+    <!-- Vehicle Description & Media Card -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <span class="icon" aria-hidden="true">📝</span>
+        <h2>Description & Media</h2>
+      </div>
+      <div class="card-content">
+        <div class="stats-grid" style="grid-template-columns: 1fr;">
+          
+          <!-- Description -->
+          <div class="stat-item" style="text-align: left; padding: 1.5rem;">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label for="inv_description" class="stat-label" style="display: block; margin-bottom: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8;">Description <span style="color: #e74c3c;">*</span></label>
+              <textarea id="inv_description" name="inv_description" rows="4" required class="form-input" form="edit-vehicle-form" style="width: 100%; border: 2px solid var(--hero-border); border-radius: 8px; padding: 0.75rem; background: var(--body-bg); color: var(--text-color); font-size: 1rem; min-height: 120px; resize: vertical; line-height: 1.5;"><%= locals.inv_description %></textarea>
+            </div>
+          </div>
 
-  <div class="form-group">
-    <label for="inv_color">Color *</label>
-    <input type="text" id="inv_color" name="inv_color" value="<%= locals.inv_color %>" required>
-  </div>
+          <!-- Image Path -->
+          <div class="stat-item" style="text-align: left; padding: 1.5rem;">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label for="inv_image" class="stat-label" style="display: block; margin-bottom: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8;">Image Path <span style="color: #e74c3c;">*</span></label>
+              <input type="text" id="inv_image" name="inv_image" value="<%= locals.inv_image %>" required class="form-input" form="edit-vehicle-form" style="width: 100%; border: 2px solid var(--hero-border); border-radius: 8px; padding: 0.75rem; background: var(--body-bg); color: var(--text-color); font-size: 1rem;">
+            </div>
+          </div>
 
-  <input type="hidden" name="inv_id" value="<%= locals.inv_id %>">
+          <!-- Thumbnail Path -->
+          <div class="stat-item" style="text-align: left; padding: 1.5rem;">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label for="inv_thumbnail" class="stat-label" style="display: block; margin-bottom: 0.75rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.8;">Thumbnail Path <span style="color: #e74c3c;">*</span></label>
+              <input type="text" id="inv_thumbnail" name="inv_thumbnail" value="<%= locals.inv_thumbnail %>" required class="form-input" form="edit-vehicle-form" style="width: 100%; border: 2px solid var(--hero-border); border-radius: 8px; padding: 0.75rem; background: var(--body-bg); color: var(--text-color); font-size: 1rem;">
+            </div>
+          </div>
 
-  <div class="form-group">
-    <input type="submit" value="Update Vehicle" class="btn btn-primary">
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Actions Card -->
+    <div class="dashboard-card">
+      <div class="card-header">
+        <span class="icon" aria-hidden="true">💾</span>
+        <h2>Save Changes</h2>
+      </div>
+      <div class="card-content">
+        <div class="action-buttons" style="margin-top: 0;">
+          <input type="hidden" name="inv_id" value="<%= locals.inv_id %>" form="edit-vehicle-form">
+          <button type="submit" id="save-btn" form="edit-vehicle-form" class="btn btn-primary" disabled style="opacity: 0.6; cursor: not-allowed;">
+            <span class="icon" aria-hidden="true">💾</span>
+            Update Vehicle
+          </button>
+          <a href="/inv" class="btn btn-secondary">
+            <span class="icon" aria-hidden="true">←</span>
+            Back to Management
+          </a>
+        </div>
+        <div style="margin-top: 1rem; padding: 1rem; background: var(--hero-bg); border: 1px solid var(--hero-border); border-radius: 8px; font-size: 0.9rem; color: var(--text-color);">
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+            <span class="icon" aria-hidden="true">💡</span>
+            <strong>Smart Save Feature</strong>
+          </div>
+          <p style="margin: 0; opacity: 0.8;">The save button will activate automatically when you make changes to any field. This prevents accidental submissions and ensures you only save when needed.</p>
+        </div>
+      </div>
+    </div>
+
   </div>
-</form>
+</div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  const form = document.querySelector(".account-form");
-  const submitButton = form.querySelector('input[type="submit"]');
-  const inputs = form.querySelectorAll('input, select, textarea');
+  const form = document.getElementById("edit-vehicle-form");
+  const submitButton = document.getElementById("save-btn");
+    // Ensure the classification select is properly associated with the form
+  const classificationSelect = document.getElementById("classificationList");
+  if (classificationSelect) {
+    classificationSelect.setAttribute("form", "edit-vehicle-form");
+  }
+    // Get all form elements more comprehensively - both inside form and associated via form attribute
+  const inputs = document.querySelectorAll('input[form="edit-vehicle-form"], select[form="edit-vehicle-form"], textarea[form="edit-vehicle-form"], #edit-vehicle-form input, #edit-vehicle-form select, #edit-vehicle-form textarea');
   
   // Store original values
   const originalValues = {};
   inputs.forEach(input => {
     if (input.type !== 'submit' && input.type !== 'hidden') {
-      originalValues[input.name] = input.value;
+      // For textarea elements, trim whitespace to avoid issues with formatting
+      originalValues[input.name] = input.tagName.toLowerCase() === 'textarea' ? input.value.trim() : input.value;
     }
   });
-  
-  // Check if form has changed
+    // Enhanced change detection with visual feedback
   function checkFormChanges() {
     let hasChanges = false;
+    let changedFields = [];
+    
     inputs.forEach(input => {
       if (input.type !== 'submit' && input.type !== 'hidden') {
-        if (input.value !== originalValues[input.name]) {
+        // For textarea elements, trim whitespace for comparison
+        const currentValue = input.tagName.toLowerCase() === 'textarea' ? input.value.trim() : input.value;
+        const originalValue = originalValues[input.name];
+        
+        if (currentValue !== originalValue) {
           hasChanges = true;
+          changedFields.push(input.name);
+          // Add visual indicator for changed fields
+          input.style.borderColor = 'var(--cta-bg)';
+          input.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)';
+        } else {
+          // Reset visual state for unchanged fields
+          input.style.borderColor = 'var(--hero-border)';
+          input.style.boxShadow = 'none';
         }
       }
     });
-    submitButton.disabled = !hasChanges;
+    
+    // Update save button state with smooth transition
+    if (hasChanges) {
+      submitButton.disabled = false;
+      submitButton.style.opacity = '1';
+      submitButton.style.cursor = 'pointer';
+      submitButton.style.transform = 'translateY(-2px)';
+      submitButton.style.boxShadow = '0 4px 12px rgba(59, 130, 246, 0.3)';
+    } else {
+      submitButton.disabled = true;
+      submitButton.style.opacity = '0.6';
+      submitButton.style.cursor = 'not-allowed';
+      submitButton.style.transform = 'translateY(0)';
+      submitButton.style.boxShadow = 'none';
+    }
   }
   
-  // Initially disable submit button
-  submitButton.disabled = true;
+  // Enhanced input validation with real-time feedback
+  function validateField(input) {
+    const value = input.value.trim();
+    const fieldName = input.name;
+    let isValid = true;
+    let errorMessage = '';
+    
+    // Basic required field validation
+    if (input.required && !value) {
+      isValid = false;
+      errorMessage = 'This field is required';
+    }
+    
+    // Specific field validations
+    switch (fieldName) {
+      case 'inv_year':
+        const year = parseInt(value);
+        if (value && (isNaN(year) || year < 1900 || year > new Date().getFullYear() + 1)) {
+          isValid = false;
+          errorMessage = 'Please enter a valid year';
+        }
+        break;
+      case 'inv_price':
+        if (value && (isNaN(parseFloat(value)) || parseFloat(value) < 0)) {
+          isValid = false;
+          errorMessage = 'Please enter a valid price';
+        }
+        break;
+      case 'inv_miles':
+        if (value && (isNaN(parseInt(value)) || parseInt(value) < 0)) {
+          isValid = false;
+          errorMessage = 'Please enter valid mileage';
+        }
+        break;
+    }
+    
+    // Visual feedback for validation
+    if (!isValid) {
+      input.style.borderColor = '#e74c3c';
+      input.style.boxShadow = '0 0 0 3px rgba(231, 76, 60, 0.1)';
+      showFieldError(input, errorMessage);
+    } else {
+      input.style.borderColor = value !== originalValues[fieldName] ? 'var(--cta-bg)' : 'var(--hero-border)';
+      input.style.boxShadow = value !== originalValues[fieldName] ? '0 0 0 3px rgba(59, 130, 246, 0.1)' : 'none';
+      hideFieldError(input);
+    }
+    
+    return isValid;
+  }
   
-  // Add event listeners
+  // Show field-specific error messages
+  function showFieldError(input, message) {
+    hideFieldError(input); // Remove existing error first
+    
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'field-error';
+    errorDiv.style.cssText = `
+      color: #e74c3c;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      background: rgba(231, 76, 60, 0.1);
+      border-radius: 4px;
+      border: 1px solid rgba(231, 76, 60, 0.2);
+      animation: slideIn 0.3s ease;
+    `;
+    errorDiv.textContent = message;
+    
+    const statItem = input.closest('.stat-item');
+    if (statItem) {
+      statItem.appendChild(errorDiv);
+    }
+  }
+  
+  // Hide field error messages
+  function hideFieldError(input) {
+    const statItem = input.closest('.stat-item');
+    if (statItem) {
+      const existingError = statItem.querySelector('.field-error');
+      if (existingError) {
+        existingError.remove();
+      }
+    }
+  }
+    // Add CSS animation for error messages
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .form-input:focus {
+      transform: translateY(-2px);
+      transition: all 0.3s ease;
+    }
+    
+    .btn:disabled {
+      transition: all 0.3s ease;
+    }
+    
+    .btn:not(:disabled) {
+      transition: all 0.3s ease;
+    }
+    
+    /* Style the classification select to match other form inputs */
+    #classificationList {
+      width: 100% !important;
+      border: 2px solid var(--hero-border) !important;
+      border-radius: 8px !important;
+      padding: 0.75rem !important;
+      background: var(--body-bg) !important;
+      color: var(--text-color) !important;
+      font-size: 1rem !important;
+    }
+  `;
+  document.head.appendChild(style);
+    // Enhanced event listeners with debouncing for better performance
+  let changeTimeout;
   inputs.forEach(input => {
     if (input.type !== 'submit' && input.type !== 'hidden') {
-      input.addEventListener('input', checkFormChanges);
-      input.addEventListener('change', checkFormChanges);
+      // Real-time change detection with debouncing
+      input.addEventListener('input', function() {
+        clearTimeout(changeTimeout);
+        changeTimeout = setTimeout(() => {
+          checkFormChanges();
+          validateField(input);
+        }, 300);
+      });
+      
+      // For textarea elements, also listen to 'change' event
+      if (input.tagName.toLowerCase() === 'textarea') {
+        input.addEventListener('change', function() {
+          clearTimeout(changeTimeout);
+          changeTimeout = setTimeout(() => {
+            checkFormChanges();
+            validateField(input);
+          }, 100);
+        });
+      }
+      
+      // Immediate validation on blur
+      input.addEventListener('blur', function() {
+        validateField(input);
+        checkFormChanges(); // Also check changes on blur
+      });
+      
+      // Focus effects
+      input.addEventListener('focus', function() {
+        this.style.transform = 'translateY(-2px)';
+      });
+      
+      input.addEventListener('blur', function() {
+        if (this.value === originalValues[this.name]) {
+          this.style.transform = 'translateY(0)';
+        }
+      });
+    }
+  });
+  
+  // Form submission with loading state
+  form.addEventListener('submit', function(e) {
+    // Validate all fields before submission
+    let isFormValid = true;
+    inputs.forEach(input => {
+      if (input.type !== 'submit' && input.type !== 'hidden') {
+        if (!validateField(input)) {
+          isFormValid = false;
+        }
+      }
+    });
+    
+    if (!isFormValid) {
+      e.preventDefault();
+      return;
+    }
+    
+    // Show loading state
+    submitButton.innerHTML = `
+      <span class="icon" style="
+        width: 20px; 
+        height: 20px; 
+        border: 2px solid transparent; 
+        border-top: 2px solid white; 
+        border-radius: 50%; 
+        animation: spin 1s linear infinite;
+      "></span>
+      Saving Changes...
+    `;
+    submitButton.disabled = true;
+  });
+  
+  // Add spin animation for loading state
+  const spinStyle = document.createElement('style');
+  spinStyle.textContent = `
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  `;
+  document.head.appendChild(spinStyle);
+  
+  // Initially check form state
+  checkFormChanges();
+  
+  // Prevent accidental navigation away from unsaved changes
+  window.addEventListener('beforeunload', function(e) {
+    if (!submitButton.disabled) {
+      e.preventDefault();
+      e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+      return e.returnValue;
     }
   });
 });
